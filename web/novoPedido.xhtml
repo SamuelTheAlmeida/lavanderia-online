@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <link rel="stylesheet" href="css/perfilUsuario.css"/>
+    <link rel="stylesheet" href="css/criarPedido.css"/>
+    <title>Lavanderia LOL</title>
+</h:head>
+
+<h:body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 col-sm-4 sidebar1">
+                <div class="logo">
+                    <img src="img/user.png" class="img-responsive center-block" alt="Logo"/>
+                </div>
+                <br/>
+                <div class="left-navigation">
+                    <ul class="list">
+                        <h5><strong>Nome Usuário</strong></h5>
+                        <li><a href="perfilUsuario.html">Perfil &nbsp;<i class="fa fa-user" aria-hidden="true"></i></a></li>
+                        <li class="active-menu">Criar Pedido &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></li>
+                        <li><a href="visualizarPedido.html">Visualizar Pedidos &nbsp;<i class="fa fa-eye" aria-hidden="true"></i></a></li>
+                        <li><a href="login.html">Sair &nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-4">
+                <div class="dados-header">
+                    <h:form class="form-horizontal">
+                        <fieldset>
+                            <legend>Novo pedido</legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="item">Tipo de Roupa:</label>
+                                <h:selectOneMenu value="#{PedidoController.itemPedido.nome}" styleClass="pçaRoupa">
+                                        <f:selectItems value="#{PedidoController.listTipoRoupa}" />
+                                </h:selectOneMenu>
+                                <br/>
+                                <!--                                 <label class="col-md-4 control-label" for="novaRoupa">Não encontrou o tipo de roupa que deseja lavar? Adicione no campo ao lado:</label>
+                                <input type="text" name="outroTipoRoupa" class="input-md"> -->
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="quantidade">Quantidade:</label>
+                                <h:inputText id="inputQuantidade" styleClass="qtd" value="#{PedidoController.itemPedido.quantidade}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+                            </div>
+                            <h:commandButton value="Adicionar" styleClass="btnGeral" action="#{PedidoController.adicionarItem}"></h:commandButton>
+                            <br/><br/>
+                            <h:dataTable styleClass="w3-table-all w3-hoverable" value="#{PedidoController.itensPedido}" var="p">
+                                <f:facet name="header">Itens do pedido</f:facet>
+                                <h:column>
+                                    <f:facet name="header">Item</f:facet>
+                                    #{p.nome}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Quantidade</f:facet>
+                                    #{p.quantidade}
+                                </h:column>  
+                                <h:column>
+                                    <f:facet name="header">Remover</f:facet>
+                                        <h:commandButton value="X" styleClass="btnRemover" action="#{PedidoController.removerItem}">
+                                        </h:commandButton>
+                                </h:column> 
+                            </h:dataTable>
+                            <label class="col-md-4 control-label" for="valorTotal"><h2>Valor total:</h2></label>
+                        </fieldset>
+                        <br/>
+                        <h:commandButton value="Salvar" styleClass="btnGeral btnSalvar" action="#{PedidoController.cadastrar}"></h:commandButton>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+
+</html>
