@@ -7,10 +7,14 @@ package model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 /**
  *
@@ -26,6 +30,7 @@ public class Pedido implements Serializable{
    private int prazo;
    private double valorTotal;
    private Cliente cliente;    
+  
 
     public int getId() {
         return id;
@@ -66,6 +71,5 @@ public class Pedido implements Serializable{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-   
-   
+
 }

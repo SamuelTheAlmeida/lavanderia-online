@@ -36,6 +36,19 @@ public class PedidoController {
     public PedidoController() {
         if (itensPedido == null) itensPedido = new ArrayList<ItemPedido>();
         if (itemPedido == null) itemPedido = new ItemPedido();
+        listTipoRoupa.add("Camiseta");
+        listTipoRoupa.add("Blusa");
+        listTipoRoupa.add("Calça");
+        listTipoRoupa.add("Casaco");
+        listTipoRoupa.add("Blusão");
+        listTipoRoupa.add("Sobretudo");
+        listTipoRoupa.add("Meias");
+        listTipoRoupa.add("Jaqueta");
+        listTipoRoupa.add("Jeans");
+        listTipoRoupa.add("Saia");
+        listTipoRoupa.add("Vestido");
+        listTipoRoupa.add("Bermuda");
+        listTipoRoupa.add("Short");  
     }
 
     public String cadastrar(){
@@ -71,20 +84,7 @@ public class PedidoController {
         this.tipoRoupaSelecionada = tipoRoupaSelecionada;
     }
 
-    public List<String> getListTipoRoupa() {
-        listTipoRoupa.add("Camiseta");
-        listTipoRoupa.add("Blusa");
-        listTipoRoupa.add("Calça");
-        listTipoRoupa.add("Casaco");
-        listTipoRoupa.add("Blusão");
-        listTipoRoupa.add("Sobretudo");
-        listTipoRoupa.add("Meias");
-        listTipoRoupa.add("Jaqueta");
-        listTipoRoupa.add("Jeans");
-        listTipoRoupa.add("Saia");
-        listTipoRoupa.add("Vestido");
-        listTipoRoupa.add("Bermuda");
-        listTipoRoupa.add("Short");      
+    public List<String> getListTipoRoupa() {    
         return listTipoRoupa;
     }
 
