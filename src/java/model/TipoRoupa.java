@@ -29,7 +29,8 @@ public class TipoRoupa implements Serializable{
     private int id;
     private String descricao;
     private int prazoLavagem;
-
+    private Set<ItemPedido> roupasPedido = new HashSet<ItemPedido>(0);
+    
     public int getId() {
         return id;
     }
@@ -53,7 +54,13 @@ public class TipoRoupa implements Serializable{
     public void setPrazoLavagem(int prazoLavagem) {
         this.prazoLavagem = prazoLavagem;
     }
-    
-    
+
+    public Set<ItemPedido> getRoupasPedido() {
+        return roupasPedido;
+    }
+
+    public void setRoupasPedido(Set<ItemPedido> roupasPedido) {
+        this.roupasPedido = roupasPedido;
+    }
     
 }

@@ -6,14 +6,21 @@
 package controller;
 
 import model.Pedido;
+import model.ItemPedido;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.RequestScoped;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import model.ItemPedidoId;
+import model.TipoRoupa;
 import org.hibernate.Query;
 import util.HibernateUtil;
 import org.hibernate.Session;
@@ -29,26 +36,28 @@ public class PedidoController {
     private List<Pedido> pedidos = new ArrayList<Pedido>();  
     private ItemPedido itemPedido;
     private List<ItemPedido> itensPedido;
-    private String tipoRoupaSelecionada;
-    private List<String> listTipoRoupa = new ArrayList<String>();
+    private Integer tipoRoupaSelecionada;
+    private Map<String, Integer> mapTipoRoupa = new HashMap<String, Integer>();
     private int quantidade;
     
     public PedidoController() {
         if (itensPedido == null) itensPedido = new ArrayList<ItemPedido>();
-        if (itemPedido == null) itemPedido = new ItemPedido();
-        listTipoRoupa.add("Camiseta");
-        listTipoRoupa.add("Blusa");
-        listTipoRoupa.add("Calça");
-        listTipoRoupa.add("Casaco");
-        listTipoRoupa.add("Blusão");
-        listTipoRoupa.add("Sobretudo");
-        listTipoRoupa.add("Meias");
-        listTipoRoupa.add("Jaqueta");
-        listTipoRoupa.add("Jeans");
-        listTipoRoupa.add("Saia");
-        listTipoRoupa.add("Vestido");
-        listTipoRoupa.add("Bermuda");
-        listTipoRoupa.add("Short");  
+        if (itemPedido == null) {
+            itemPedido = new ItemPedido();
+        }
+        mapTipoRoupa.put("Camiseta", 1);
+        mapTipoRoupa.put("Blusa", 2);
+        mapTipoRoupa.put("Calça", 3);
+        mapTipoRoupa.put("Casaco", 4);
+        mapTipoRoupa.put("Blusão", 5);
+        mapTipoRoupa.put("Sobretudo", 6);
+        mapTipoRoupa.put("Meias", 7);
+        mapTipoRoupa.put("Jaqueta", 8);
+        mapTipoRoupa.put("Jeans", 9);
+        mapTipoRoupa.put("Saia", 10);
+        mapTipoRoupa.put("Vestido", 11);
+        mapTipoRoupa.put("Bermuda", 12);
+        mapTipoRoupa.put("Short", 13);  
     }
 
     public String cadastrar(){
@@ -62,10 +71,20 @@ public class PedidoController {
     }
     
     public void adicionarItem() {
-        if (itemPedido.quantidade > 0) {
+        if (itemPedido.getQuantidade() > 0) {
+            TipoRoupa tipoRoupa = new TipoRoupa();
+            tipoRoupa.setId(tipoRoupaSelecionada);
+            String[] lista = Arrays.copyOf(mapTipoRoupa.keySet().toArray(), mapTipoRoupa.keySet().toArray().length, String[].class);
+            tipoRoupa.setDescricao(lista[0]);
+            itemPedido.setPedido(pedido);
+            itemPedido.setTipoRoupa(tipoRoupa);
             this.itensPedido.add(itemPedido);
             this.itemPedido = new ItemPedido();            
         }
+    }
+    
+    public void removerItem() {
+        //itensPedido.remove(itensPedido)
     }
     
     public int getQuantidade() {
@@ -76,20 +95,20 @@ public class PedidoController {
         this.quantidade = quantidade;
     }
 
-    public String getTipoRoupaSelecionada() {
+    public Integer getTipoRoupaSelecionada() {
         return tipoRoupaSelecionada;
     }
 
-    public void setTipoRoupaSelecionada(String tipoRoupaSelecionada) {
+    public void setTipoRoupaSelecionada(Integer tipoRoupaSelecionada) {
         this.tipoRoupaSelecionada = tipoRoupaSelecionada;
     }
 
-    public List<String> getListTipoRoupa() {    
-        return listTipoRoupa;
+    public Map<String, Integer> getMapTipoRoupa() {
+        return mapTipoRoupa;
     }
 
-    public void setListTipoRoupa(List<String> listTipoRoupa) {
-        this.listTipoRoupa = listTipoRoupa;
+    public void setMapTipoRoupa(Map<String, Integer> mapTipoRoupa) {
+        this.mapTipoRoupa = mapTipoRoupa;
     }
     
     public Pedido getPedido() {
@@ -119,26 +138,5 @@ public class PedidoController {
     public void setItemPedido(ItemPedido itemPedido) {
         this.itemPedido = itemPedido;
     }
-    
-    public class ItemPedido {
-        private String nome;
-        private int quantidade;
-
-        public String getNome() {
-            return nome;
-        }
-
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
-
-        public int getQuantidade() {
-            return quantidade;
-        }
-
-        public void setQuantidade(int quantidade) {
-            this.quantidade = quantidade;
-        }
-        
-    }
+  
 }

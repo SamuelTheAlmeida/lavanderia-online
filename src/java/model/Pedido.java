@@ -6,10 +6,12 @@
 package model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,26 +28,17 @@ public class Pedido implements Serializable{
    @Id
    @GeneratedValue(strategy=GenerationType.AUTO)
    private int id;
-   private List<TipoRoupa> roupasPedido; 
+   private Set<ItemPedido> roupasPedido = new HashSet<ItemPedido>(0);
    private int prazo;
    private double valorTotal;
    private Cliente cliente;    
-  
-
+   
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public List<TipoRoupa> getRoupasPedido() {
-        return roupasPedido;
-    }
-
-    public void setRoupasPedido(List<TipoRoupa> roupasPedido) {
-        this.roupasPedido = roupasPedido;
     }
 
     public int getPrazo() {
@@ -71,5 +64,18 @@ public class Pedido implements Serializable{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Pedido", cascade=CascadeType.ALL)
+    public Set<ItemPedido> getRoupasPedido() {
+        return roupasPedido;
+    }
+    
+
+    public void setRoupasPedido(Set<ItemPedido> roupasPedido) {
+        this.roupasPedido = roupasPedido;
+    }
+    
+    
+    
 
 }

@@ -41,8 +41,8 @@
                             <legend>Novo pedido</legend>
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="item">Tipo de Roupa:</label>
-                                <h:selectOneMenu value="#{PedidoController.itemPedido.nome}" styleClass="pçaRoupa">
-                                        <f:selectItems value="#{PedidoController.listTipoRoupa}" />
+                                <h:selectOneMenu value="#{PedidoController.tipoRoupaSelecionada}"  styleClass="pçaRoupa">
+                                    <f:selectItems value="#{PedidoController.mapTipoRoupa}" />
                                 </h:selectOneMenu>
                                 <br/>
                                 <!--                                 <label class="col-md-4 control-label" for="novaRoupa">Não encontrou o tipo de roupa que deseja lavar? Adicione no campo ao lado:</label>
@@ -55,10 +55,11 @@
                             <h:commandButton value="Adicionar" styleClass="btnGeral" action="#{PedidoController.adicionarItem}"></h:commandButton>
                             <br/><br/>
                             <h:dataTable styleClass="w3-table-all w3-hoverable" value="#{PedidoController.itensPedido}" var="p">
+                                <h:inputHidden value="#{p.tipoRoupa.id}" id="idTipoRoupa" />
                                 <f:facet name="header">Itens do pedido</f:facet>
                                 <h:column>
                                     <f:facet name="header">Item</f:facet>
-                                    #{p.nome}
+                                    #{p.tipoRoupa.descricao}
                                 </h:column>
                                 <h:column>
                                     <f:facet name="header">Quantidade</f:facet>
@@ -66,9 +67,10 @@
                                 </h:column>  
                                 <h:column>
                                     <f:facet name="header">Remover</f:facet>
-                                        <h:commandButton value="X" styleClass="btnRemover" action="#{PedidoController.removerItem}">
+                                    <h:commandButton value="X" styleClass="btnRemover" action="#{PedidoController.removerItem(p.nome)}">
                                         </h:commandButton>
                                 </h:column> 
+                                
                             </h:dataTable>
                             <label class="col-md-4 control-label" for="valorTotal"><h2>Valor total:</h2></label>
                         </fieldset>
