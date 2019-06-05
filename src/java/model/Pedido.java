@@ -25,15 +25,15 @@ import javax.persistence.Table;
 @javax.persistence.Entity
 @javax.persistence.Table(name="Pedido")
 public class Pedido implements Serializable{
-   @Id
-   @GeneratedValue(strategy=GenerationType.AUTO)
    private int id;
-   private Set<ItemPedido> roupasPedido = new HashSet<ItemPedido>(0);
+   private Set<TipoRoupa> roupasPedido = new HashSet<TipoRoupa>(0);
    private int prazo;
    private double valorTotal;
    private Cliente cliente;    
    
-    public int getId() {
+   @Id
+   @GeneratedValue(strategy=GenerationType.AUTO)
+   public int getId() {
         return id;
     }
 
@@ -66,12 +66,12 @@ public class Pedido implements Serializable{
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "Pedido", cascade=CascadeType.ALL)
-    public Set<ItemPedido> getRoupasPedido() {
+    public Set<TipoRoupa> getRoupasPedido() {
         return roupasPedido;
     }
     
 
-    public void setRoupasPedido(Set<ItemPedido> roupasPedido) {
+    public void setRoupasPedido(Set<TipoRoupa> roupasPedido) {
         this.roupasPedido = roupasPedido;
     }
     

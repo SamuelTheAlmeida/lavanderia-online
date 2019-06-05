@@ -24,13 +24,13 @@ import javax.persistence.Table;
 @javax.persistence.Entity
 @javax.persistence.Table(name="TipoRoupa")
 public class TipoRoupa implements Serializable{
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private String descricao;
     private int prazoLavagem;
     private Set<ItemPedido> roupasPedido = new HashSet<ItemPedido>(0);
     
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return id;
     }

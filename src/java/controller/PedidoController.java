@@ -13,6 +13,7 @@ import javax.faces.bean.RequestScoped;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,8 +62,19 @@ public class PedidoController {
     }
 
     public String cadastrar(){
-        Session session = HibernateUtil.getSessionFactory().
-        openSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+
+	session.beginTransaction();
+	Pedido pedido = new Pedido();
+        HashSet<TipoRoupa> roupasPedido = new HashSet<TipoRoupa>();
+        for (ItemPedido i : itensPedido) {
+            roupasPedido.add(i.getTipoRoupa());
+        }
+        pedido.setRoupasPedido(roupasPedido);     
+        pedido.setPrazo(10);
+        pedido.setValorTotal(500);
+        session.save(pedido);
+	session.getTransaction().commit();
         session.beginTransaction();
         session.save(pedido);
         session.getTransaction().commit();
@@ -76,6 +88,7 @@ public class PedidoController {
             tipoRoupa.setId(tipoRoupaSelecionada);
             String[] lista = Arrays.copyOf(mapTipoRoupa.keySet().toArray(), mapTipoRoupa.keySet().toArray().length, String[].class);
             tipoRoupa.setDescricao(lista[0]);
+            tipoRoupa.setPrazoLavagem(10);
             itemPedido.setPedido(pedido);
             itemPedido.setTipoRoupa(tipoRoupa);
             this.itensPedido.add(itemPedido);

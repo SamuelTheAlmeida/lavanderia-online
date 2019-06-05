@@ -41,6 +41,13 @@ Contributor(s):
 -->
 <hibernate-configuration>
   <session-factory>
-
-    </session-factory>
+    <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
+    <property name="hibernate.connection.url">jdbc:derby://localhost:1527/lavanderia</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">admin</property>
+    <mapping class="model.Pedido"/>
+    <mapping class="model.ItemPedido"/>
+    <mapping class="model.TipoRoupa"/>
+    <mapping class="model.ItemPedidoId"/>
+  </session-factory>
 </hibernate-configuration>
