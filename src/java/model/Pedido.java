@@ -26,10 +26,10 @@ import javax.persistence.Table;
 @javax.persistence.Table(name="Pedido")
 public class Pedido implements Serializable{
    private int id;
-   private Set<TipoRoupa> roupasPedido = new HashSet<TipoRoupa>(0);
+   private Set<ItemPedido> roupasPedido = new HashSet<ItemPedido>(0);
    private int prazo;
    private double valorTotal;
-   private Cliente cliente;    
+  // private Cliente cliente;    
    
    @Id
    @GeneratedValue(strategy=GenerationType.AUTO)
@@ -57,21 +57,21 @@ public class Pedido implements Serializable{
         this.valorTotal = valorTotal;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+   // public Cliente getCliente() {
+   //     return cliente;
+   // }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+   // public void setCliente(Cliente cliente) {
+   //     this.cliente = cliente;
+   // }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Pedido", cascade=CascadeType.ALL)
-    public Set<TipoRoupa> getRoupasPedido() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pedido", cascade=CascadeType.ALL)
+    public Set<ItemPedido> getRoupasPedido() {
         return roupasPedido;
     }
     
 
-    public void setRoupasPedido(Set<TipoRoupa> roupasPedido) {
+    public void setRoupasPedido(Set<ItemPedido> roupasPedido) {
         this.roupasPedido = roupasPedido;
     }
     

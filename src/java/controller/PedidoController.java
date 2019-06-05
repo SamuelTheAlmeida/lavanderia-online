@@ -63,22 +63,28 @@ public class PedidoController {
 
     public String cadastrar(){
         Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
 
-	session.beginTransaction();
-	Pedido pedido = new Pedido();
-        HashSet<TipoRoupa> roupasPedido = new HashSet<TipoRoupa>();
-        for (ItemPedido i : itensPedido) {
-            roupasPedido.add(i.getTipoRoupa());
-        }
-        pedido.setRoupasPedido(roupasPedido);     
+        // implementar regra de negocio para verificar qual o maior prazo
         pedido.setPrazo(10);
         pedido.setValorTotal(500);
-        session.save(pedido);
-	session.getTransaction().commit();
-        session.beginTransaction();
+
+        // tipo roupa deve vir do banco
+        TipoRoupa tipoRoupa = itensPedido.get(0).getTipoRoupa();
+        //new category, need save to get the id first
+        session.save(tipoRoupa);
+        
+        // iterar sobre itensPedido e salvar cada um
+        ItemPedido itemPedido = new ItemPedido();
+        itemPedido.setPedido(pedido);
+        itemPedido.setTipoRoupa(tipoRoupa);
+        itemPedido.setQuantidade(2);
+        pedido.getRoupasPedido().add(itemPedido);
         session.save(pedido);
         session.getTransaction().commit();
-        return null;
+        
+        
+        return "pedidoRealizado";
         //return "pedidos";
     }
     

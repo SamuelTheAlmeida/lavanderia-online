@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,6 +56,7 @@ public class TipoRoupa implements Serializable{
         this.prazoLavagem = prazoLavagem;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.tipoRoupa")
     public Set<ItemPedido> getRoupasPedido() {
         return roupasPedido;
     }
