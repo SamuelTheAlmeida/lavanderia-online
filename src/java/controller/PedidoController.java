@@ -46,19 +46,7 @@ public class PedidoController {
         if (itemPedido == null) {
             itemPedido = new ItemPedido();
         }
-        mapTipoRoupa.put("Camiseta", 1);
-        mapTipoRoupa.put("Blusa", 2);
-        mapTipoRoupa.put("Calça", 3);
-        mapTipoRoupa.put("Casaco", 4);
-        mapTipoRoupa.put("Blusão", 5);
-        mapTipoRoupa.put("Sobretudo", 6);
-        mapTipoRoupa.put("Meias", 7);
-        mapTipoRoupa.put("Jaqueta", 8);
-        mapTipoRoupa.put("Jeans", 9);
-        mapTipoRoupa.put("Saia", 10);
-        mapTipoRoupa.put("Vestido", 11);
-        mapTipoRoupa.put("Bermuda", 12);
-        mapTipoRoupa.put("Short", 13);  
+        carregarTipoRoupa();
     }
 
     public String cadastrar(){
@@ -70,14 +58,15 @@ public class PedidoController {
         pedido.setValorTotal(500);
 
         // tipo roupa deve vir do banco
-        TipoRoupa tipoRoupa = itensPedido.get(0).getTipoRoupa();
+        //TipoRoupa tipoRoupa = itensPedido.get(0).getTipoRoupa();
         //new category, need save to get the id first
-        session.save(tipoRoupa);
+        //session.save(tipoRoupa);
         
         // iterar sobre itensPedido e salvar cada um
+        
         ItemPedido itemPedido = new ItemPedido();
         itemPedido.setPedido(pedido);
-        itemPedido.setTipoRoupa(tipoRoupa);
+        //itemPedido.setTipoRoupa(tipoRoupa);
         itemPedido.setQuantidade(2);
         pedido.getRoupasPedido().add(itemPedido);
         session.save(pedido);
@@ -100,6 +89,18 @@ public class PedidoController {
             this.itensPedido.add(itemPedido);
             this.itemPedido = new ItemPedido();            
         }
+    }
+    
+    public void carregarTipoRoupa() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query select = session.createQuery("from TipoRoupa order by id");
+        List<TipoRoupa> objetos = (List<TipoRoupa>)select.list();
+        for (TipoRoupa tr : objetos) {
+            mapTipoRoupa.put(tr.getDescricao(), tr.getId());
+        }
+        session.getTransaction().commit();
+        session.close();
     }
     
     public void removerItem() {
