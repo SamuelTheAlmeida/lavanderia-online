@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import dao.TipoRoupaDAO;
@@ -10,27 +5,15 @@ import model.Pedido;
 import model.ItemPedido;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.RequestScoped;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import model.ItemPedidoId;
 import model.TipoRoupa;
 import org.hibernate.Query;
 import util.HibernateUtil;
 import org.hibernate.Session;
 
-/**
- *
- * @author SAMUEL
- */
 @ManagedBean(name="PedidoController")
 @SessionScoped
 public class PedidoController {
@@ -65,21 +48,12 @@ public class PedidoController {
         }
         pedido.setPrazo(maiorPrazo);
         pedido.setValorTotal(500);
-
-        // tipo roupa deve vir do banco
-        //TipoRoupa tipoRoupa = itensPedido.get(0).getTipoRoupa();
-        //new category, need save to get the id first
-        //session.save(tipoRoupa);
         
         // itera sobre itensPedido e salva cada um no pedido
         for (ItemPedido ip : itensPedido) {
             pedido.getRoupasPedido().add(ip);
         }
-        //ItemPedido itemPedido = new ItemPedido();
-        //itemPedido.setPedido(pedido);
-        //itemPedido.setQuantidade(2);
-        //pedido.getRoupasPedido().add(itemPedido);
-        
+    
         // finalmente salva o pedido no banco
         session.save(pedido);
         session.getTransaction().commit();
