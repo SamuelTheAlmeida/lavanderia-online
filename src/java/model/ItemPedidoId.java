@@ -33,7 +33,7 @@ public class ItemPedidoId implements java.io.Serializable{
         this.tipoRoupa = tipoRoupa;
     }
     
-	public boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 

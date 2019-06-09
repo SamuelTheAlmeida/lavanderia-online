@@ -25,4 +25,14 @@ public class TipoRoupaDAO {
         session.close();
         return result;
     }
+    
+    public List<TipoRoupa> listar() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query select = session.createQuery("from TipoRoupa order by id");
+        List<TipoRoupa> lista = (List<TipoRoupa>)select.list();
+        session.getTransaction().commit();
+        session.close();
+        return lista;
+    }
 }

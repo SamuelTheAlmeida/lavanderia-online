@@ -22,74 +22,90 @@ public class PedidoController {
     private ItemPedido itemPedido;
     private List<ItemPedido> itensPedido;
     private Integer tipoRoupaSelecionada;
+    List<TipoRoupa> listTipoRoupa;
     private Map<String, Integer> mapTipoRoupa = new HashMap<String, Integer>();
     private int quantidade;
+    private double valorTotal;
     
     public PedidoController() {
         if (itensPedido == null) itensPedido = new ArrayList<ItemPedido>();
         if (itemPedido == null) {
             itemPedido = new ItemPedido();
         }
+        valorTotal = 0.0;
+        quantidade = 0;
         carregarTipoRoupa();
-    }
-
-    public String cadastrar(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        // regra para verificar qual o maior prazo e somar valor total
-        int maiorPrazo = 0;
-        int valorTotal = 0;
-        for (ItemPedido ip : itensPedido) {
-            if (ip.getTipoRoupa().getPrazoLavagem() > maiorPrazo) {
-              maiorPrazo = ip.getTipoRoupa().getPrazoLavagem();  
-            }
-            // pegar os valores de cada roupa e somar, multiplicando pela qtd
-        }
-        pedido.setPrazo(maiorPrazo);
-        pedido.setValorTotal(500);
         
-        // itera sobre itensPedido e salva cada um no pedido
-        for (ItemPedido ip : itensPedido) {
-            pedido.getRoupasPedido().add(ip);
-        }
-    
-        // finalmente salva o pedido no banco
-        session.save(pedido);
-        session.getTransaction().commit();
-        
-        session.close();
-        itensPedido.clear();
-        return "pedidoRealizado";
     }
     
     public void adicionarItem() {
         if (itemPedido.getQuantidade() > 0) {
             TipoRoupa tipoRoupa = new TipoRoupaDAO().obter(tipoRoupaSelecionada);
+            
             itemPedido.setPedido(pedido);
             itemPedido.setTipoRoupa(tipoRoupa);
             this.itensPedido.add(itemPedido);
             // reseta a variavel para a proxima adição na lista
-            this.itemPedido = new ItemPedido();            
+            valorTotal +=  tipoRoupa.getPreco() * itemPedido.getQuantidade();
+            this.itemPedido = new ItemPedido();     
         }
         // exibir erro quantidade
         // exibir erro sem roupa selecionada
     }
-    
-    public void carregarTipoRoupa() {
+
+    public String cadastrar(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query select = session.createQuery("from TipoRoupa order by id");
-        List<TipoRoupa> objetos = (List<TipoRoupa>)select.list();
-        for (TipoRoupa tr : objetos) {
-            mapTipoRoupa.put(tr.getDescricao(), tr.getId());
+        pedido = new Pedido();
+        // regra para verificar qual o maior prazo e somar valor total
+        int maiorPrazo = 0;
+        
+        for (ItemPedido ip : itensPedido) {
+            if (ip.getTipoRoupa().getPrazoLavagem() > maiorPrazo) {
+              maiorPrazo = ip.getTipoRoupa().getPrazoLavagem();  
+            }
+            //valorTotal += ip.getQuantidade() * ip.getTipoRoupa().getPreco();
         }
+        pedido.setPrazo(maiorPrazo);
+        pedido.setValorTotal(valorTotal);
+        
+        // itera sobre itensPedido e salva cada um no pedido
+        for (ItemPedido ip : itensPedido) {
+            System.out.println(ip.getPedido().getId());
+            System.out.println(ip.getTipoRoupa().getId());
+            pedido.getRoupasPedido().add(ip);
+            ip.setPedido(pedido);
+        }
+        
+        session.clear();
+        // finalmente salva o pedido no banco
+        System.out.println(pedido);
+        session.save(pedido);
         session.getTransaction().commit();
         session.close();
+        itensPedido = new ArrayList<ItemPedido>();
+        
+        valorTotal = 0.0;
+        return "pedidoRealizado";
     }
     
-    public void removerItem() {
-        //itensPedido.remove(itensPedido)
+    public void carregarTipoRoupa() {
+        listTipoRoupa = new TipoRoupaDAO().listar();
+        for (TipoRoupa tr : listTipoRoupa) {
+            mapTipoRoupa.put(tr.getDescricao(), tr.getId());
+        }
+    }
+    
+    public void removerItem(int idTipoRoupa) {
+        int index = 0;
+        for (int i = 0; i < itensPedido.size(); i++) {
+            if (itensPedido.get(i).getTipoRoupa().getId() == idTipoRoupa) {
+                index = i;
+            }
+        }
+        double valorPedido = itensPedido.get(index).getQuantidade() * itensPedido.get(index).getTipoRoupa().getPreco();
+        valorTotal = valorTotal - valorPedido;
+        itensPedido.remove(index);
     }
     
     public int getQuantidade() {
@@ -143,5 +159,23 @@ public class PedidoController {
     public void setItemPedido(ItemPedido itemPedido) {
         this.itemPedido = itemPedido;
     }
+
+    public List<TipoRoupa> getListTipoRoupa() {
+        return listTipoRoupa;
+    }
+
+    public void setListTipoRoupa(List<TipoRoupa> listTipoRoupa) {
+        this.listTipoRoupa = listTipoRoupa;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+    
+    
   
 }

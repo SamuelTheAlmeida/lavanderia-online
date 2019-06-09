@@ -28,6 +28,7 @@ public class TipoRoupa implements Serializable{
     private int id;
     private String descricao;
     private int prazoLavagem;
+    private double preco;
     private Set<ItemPedido> roupasPedido = new HashSet<ItemPedido>(0);
     
     @Id
@@ -55,6 +56,16 @@ public class TipoRoupa implements Serializable{
     public void setPrazoLavagem(int prazoLavagem) {
         this.prazoLavagem = prazoLavagem;
     }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+    
+    
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.tipoRoupa")
     public Set<ItemPedido> getRoupasPedido() {

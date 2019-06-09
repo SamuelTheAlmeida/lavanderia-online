@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
 /**
  *
  * @author SAMUEL
@@ -70,7 +71,7 @@ public class Pedido implements Serializable{
         return roupasPedido;
     }
     
-
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     public void setRoupasPedido(Set<ItemPedido> roupasPedido) {
         this.roupasPedido = roupasPedido;
     }

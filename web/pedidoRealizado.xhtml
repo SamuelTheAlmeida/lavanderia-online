@@ -44,14 +44,15 @@
                         <ui:repeat var="p" value="#{PedidoController.pedido.roupasPedido.toArray()}" varStatus="status">
                             <p>#{p.quantidade} #{p.tipoRoupa.descricao}</p>
                         </ui:repeat>
-                        <P>AQUI VAI OS ITENS DO PEDIDO. EX: 5 CAMISAS, 2 CALÇAS, ETC</P>
-                        <h4>Endereço de entrega</h4>
+                        <h3>Valor total:
+                            <h:outputText value="#{PedidoController.pedido.valorTotal}" >
+                                <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                            </h:outputText>
+                        </h3>
+                        <p class="text-danger">Prazo de entrega: #{PedidoController.pedido.prazo} dias úteis</p>
+                        <!-- <h4>Endereço de entrega</h4>
                         <p>AQUI ENTRA A RUA</p>
-                        <p>AQUI VAI CIDADE - ESTADO</p>
-                        <h4>Pagamento</h4>
-                        <p>AQUI VAI A FORMA DE PAGAMENTO</p>
-                        <h4>Valor do Pedido</h4>
-                        <p>AQUI VAI O VALOR DO PEDIDO</p>
+                        <p>AQUI VAI CIDADE - ESTADO</p> !-->
                     </div>
                 </fieldset>
             </h:form>

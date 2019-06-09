@@ -66,13 +66,25 @@
                                     #{p.quantidade}
                                 </h:column>  
                                 <h:column>
+                                    <f:facet name="header">Valor Unitário</f:facet>
+                                    <h:outputText value="#{p.tipoRoupa.preco}" >
+                                        <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                                    </h:outputText>
+                                </h:column> 
+                                <h:column>
                                     <f:facet name="header">Remover</f:facet>
-                                    <h:commandButton value="X" styleClass="btnRemover" action="#{PedidoController.removerItem(p.nome)}">
+                                    <h:commandButton value="X" styleClass="btnRemover" action="#{PedidoController.removerItem(p.tipoRoupa.id)}">
                                         </h:commandButton>
                                 </h:column> 
                                 
                             </h:dataTable>
-                            <label class="col-md-4 control-label" for="valorTotal"><h2>Valor total:</h2></label>
+                            <label class="col-md-4 control-label" for="valorTotal">
+                                <h2>Valor total:
+                                    <h:outputText value="#{PedidoController.valorTotal}" >
+                                        <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                                    </h:outputText>
+                                </h2>
+                            </label>
                         </fieldset>
                         <br/>
                         <h:commandButton value="Salvar" styleClass="btnGeral btnSalvar" action="#{PedidoController.cadastrar}"></h:commandButton>
