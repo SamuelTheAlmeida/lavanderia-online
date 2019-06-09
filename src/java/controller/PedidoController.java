@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.TipoRoupaDAO;
 import model.Pedido;
 import model.ItemPedido;
 import javax.faces.bean.ManagedBean;
@@ -53,8 +54,16 @@ public class PedidoController {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        // implementar regra de negocio para verificar qual o maior prazo
-        pedido.setPrazo(10);
+        // regra para verificar qual o maior prazo e somar valor total
+        int maiorPrazo = 0;
+        int valorTotal = 0;
+        for (ItemPedido ip : itensPedido) {
+            if (ip.getTipoRoupa().getPrazoLavagem() > maiorPrazo) {
+              maiorPrazo = ip.getTipoRoupa().getPrazoLavagem();  
+            }
+            // pegar os valores de cada roupa e somar, multiplicando pela qtd
+        }
+        pedido.setPrazo(maiorPrazo);
         pedido.setValorTotal(500);
 
         // tipo roupa deve vir do banco
@@ -62,33 +71,35 @@ public class PedidoController {
         //new category, need save to get the id first
         //session.save(tipoRoupa);
         
-        // iterar sobre itensPedido e salvar cada um
+        // itera sobre itensPedido e salva cada um no pedido
+        for (ItemPedido ip : itensPedido) {
+            pedido.getRoupasPedido().add(ip);
+        }
+        //ItemPedido itemPedido = new ItemPedido();
+        //itemPedido.setPedido(pedido);
+        //itemPedido.setQuantidade(2);
+        //pedido.getRoupasPedido().add(itemPedido);
         
-        ItemPedido itemPedido = new ItemPedido();
-        itemPedido.setPedido(pedido);
-        //itemPedido.setTipoRoupa(tipoRoupa);
-        itemPedido.setQuantidade(2);
-        pedido.getRoupasPedido().add(itemPedido);
+        // finalmente salva o pedido no banco
         session.save(pedido);
         session.getTransaction().commit();
         
-        
+        session.close();
+        itensPedido.clear();
         return "pedidoRealizado";
-        //return "pedidos";
     }
     
     public void adicionarItem() {
         if (itemPedido.getQuantidade() > 0) {
-            TipoRoupa tipoRoupa = new TipoRoupa();
-            tipoRoupa.setId(tipoRoupaSelecionada);
-            String[] lista = Arrays.copyOf(mapTipoRoupa.keySet().toArray(), mapTipoRoupa.keySet().toArray().length, String[].class);
-            tipoRoupa.setDescricao(lista[0]);
-            tipoRoupa.setPrazoLavagem(10);
+            TipoRoupa tipoRoupa = new TipoRoupaDAO().obter(tipoRoupaSelecionada);
             itemPedido.setPedido(pedido);
             itemPedido.setTipoRoupa(tipoRoupa);
             this.itensPedido.add(itemPedido);
+            // reseta a variavel para a proxima adição na lista
             this.itemPedido = new ItemPedido();            
         }
+        // exibir erro quantidade
+        // exibir erro sem roupa selecionada
     }
     
     public void carregarTipoRoupa() {
