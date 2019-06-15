@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+      
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+        <script src="https://kit.fontawesome.com/a04ef512fa.js"></script>
+        <h:outputStylesheet name="bootstrap.min.css" library="css" />
+        <h:outputStylesheet name="w3.css" library="css" />
+        <h:outputStylesheet name="perfilUsuario.css" library="css" />
+        <h:outputStylesheet name="criarPedido.css" library="css" />
+        <title>Lavanderia LOL</title>
+    </h:head>
+    
+    <h:body>
+        <div class="container-fluid">
+            <div class="row">					
+                <ui:insert name="header" >
+                  <ui:include src="/template/common/commonHeader.xhtml" />
+                </ui:insert>
+
+                <ui:insert name="content" >
+                  <ui:include src="/template/common/commonContent.xhtml" />
+                </ui:insert>
+
+                <!--<ui:insert name="footer" >
+                  <ui:include src="/template/common/commonFooter.xhtml" />
+                </ui:insert> -->
+            </div>
+        </div>
+    </h:body>
+</html>

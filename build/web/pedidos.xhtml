@@ -3,22 +3,55 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
-    <head>
-        <title>Lista de pessoas</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <h:dataTable value="#{PessoaMB.pessoas}" var="p">
-        <f:facet name="header">Lista de Nomes</f:facet>
-        <h:column>
-        <f:facet name="header">Id</f:facet>
-        #{p.id}
-        </h:column>
-        <h:column>
-        <f:facet name="header">Nome</f:facet>
-        #{p.nome}
-        </h:column>
-        </h:dataTable>
-    </body>
+      xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:body>
+        <ui:composition template="/template/common/commonLayout.xhtml">
+                <ui:define name="content">
+                    <div class="col-md-2 col-sm-4">
+                        <div class="dados-header">
+                          <form class="form-horizontal">
+                            <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                              <legend>Meus pedidos</legend>
+                                <div class="form-group">
+                                  <label class="col-md-4 control-label" for="buscarPedido">Buscar pedido:</label>
+                                  <input type="text" name="buscarPedido" class="input-md"/>
+                                </div>
+                              <div style="overflow-x:auto;">                  
+                                <h:dataTable class="w3-table-all w3-hoverable" value="#{PedidoController.pedidos}" var="p">
+                                    <h:column>
+                                        <f:facet name="header">Número</f:facet>
+                                        #{p.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Data/Hora</f:facet>
+                                        15/06/2019
+                                    </h:column>  
+                                    <h:column>
+                                        <f:facet name="header">Descrição</f:facet>
+                                        5 camisetas
+                                    </h:column> 
+                                    <h:column>
+                                        <f:facet name="header">Valor Total</f:facet>
+                                        <h:outputText value="#{p.valorTotal}" >
+                                            <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                                        </h:outputText>
+                                    </h:column> 
+                                    <h:column>
+                                        <f:facet name="header">Status</f:facet>
+                                        Pendente
+                                    </h:column>                   
+                                </h:dataTable>
+                              </div>                      
+                            </fieldset>
+                            <br/>                    
+                          </form>
+                        </div>
+                    </div>
+                </ui:define>	
+        </ui:composition>
+    	
+    </h:body>
+
 </html>
