@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+        <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <link rel="stylesheet" href="css/perfilUsuario.css"/>
+    <title>Lavanderia LOL</title>
+</h:head>
+
+<h:body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 col-sm-4 sidebar1">
+                <div class="logo">
+                    <img src="img/user.png" class="img-responsive center-block" alt="Logo"/>
+                </div>
+                <br/>
+                <div class="left-navigation">
+                    <ul class="list">
+                        <h5><strong>Nome Usuário</strong></h5>
+                        <li >Perfil &nbsp;<i class="fa fa-user" aria-hidden="true"></i></li>
+                        <li><a href="criarPedido.html">Criar Pedido &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a></li>
+                        <li><a href="visualizarPedido.html">Visualizar Pedidos &nbsp;<i class="fa fa-eye" aria-hidden="true"></i></a></li>
+                        <li>Sair &nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i></li>
+                    </ul>
+                </div>
+            </div>
+            <h:form>
+                <fieldset>
+                    <legend>Pedido</legend>
+                    <h2>Pedido número <h:outputText value="#{PedidoController.pedido.id}"/> realizado com sucesso!</h2>
+                    <p>Dados Pessoais</p>
+                    <div class="dadosPessoais" style="border: outset">
+                        <h4>Descrição</h4>
+                        <ui:repeat var="p" value="#{PedidoController.pedido.roupasPedido.toArray()}" varStatus="status">
+                            <p>#{p.quantidade} #{p.tipoRoupa.descricao}</p>
+                        </ui:repeat>
+                        <h3>Valor total:
+                            <h:outputText value="#{PedidoController.pedido.valorTotal}" >
+                                <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                            </h:outputText>
+                        </h3>
+                        <p class="text-danger">Prazo de entrega: #{PedidoController.pedido.prazo} dias úteis</p>
+                        <!-- <h4>Endereço de entrega</h4>
+                        <p>AQUI ENTRA A RUA</p>
+                        <p>AQUI VAI CIDADE - ESTADO</p> !-->
+                    </div>
+                </fieldset>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+
+</html>

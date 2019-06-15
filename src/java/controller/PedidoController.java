@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import model.TipoRoupa;
 import org.hibernate.Query;
 import util.HibernateUtil;
@@ -20,7 +21,7 @@ public class PedidoController {
     private Pedido pedido = new Pedido();
     private List<Pedido> pedidos = new ArrayList<Pedido>();  
     private ItemPedido itemPedido;
-    private List<ItemPedido> itensPedido;
+    private Map<Integer, ItemPedido> itensPedido;
     private Integer tipoRoupaSelecionada;
     List<TipoRoupa> listTipoRoupa;
     private Map<String, Integer> mapTipoRoupa = new HashMap<String, Integer>();
@@ -28,7 +29,7 @@ public class PedidoController {
     private double valorTotal;
     
     public PedidoController() {
-        if (itensPedido == null) itensPedido = new ArrayList<ItemPedido>();
+        if (itensPedido == null) itensPedido = new TreeMap<Integer, ItemPedido>();
         if (itemPedido == null) {
             itemPedido = new ItemPedido();
         }
@@ -44,7 +45,14 @@ public class PedidoController {
             
             itemPedido.setPedido(pedido);
             itemPedido.setTipoRoupa(tipoRoupa);
-            this.itensPedido.add(itemPedido);
+            if (this.itensPedido.containsKey(tipoRoupa.getId())) {
+                int qtdAtual = this.itensPedido.get(tipoRoupa.getId()).getQuantidade();
+                int qtdAdicionada = itemPedido.getQuantidade();
+                this.itensPedido.get(tipoRoupa.getId()).setQuantidade(qtdAtual + qtdAdicionada);
+            } else {
+                this.itensPedido.put(tipoRoupa.getId(), itemPedido);
+            }
+            
             // reseta a variavel para a proxima adição na lista
             valorTotal +=  tipoRoupa.getPreco() * itemPedido.getQuantidade();
             this.itemPedido = new ItemPedido();     
@@ -60,7 +68,7 @@ public class PedidoController {
         // regra para verificar qual o maior prazo e somar valor total
         int maiorPrazo = 0;
         
-        for (ItemPedido ip : itensPedido) {
+        for (ItemPedido ip : itensPedido.values()) {
             if (ip.getTipoRoupa().getPrazoLavagem() > maiorPrazo) {
               maiorPrazo = ip.getTipoRoupa().getPrazoLavagem();  
             }
@@ -70,7 +78,7 @@ public class PedidoController {
         pedido.setValorTotal(valorTotal);
         
         // itera sobre itensPedido e salva cada um no pedido
-        for (ItemPedido ip : itensPedido) {
+        for (ItemPedido ip : itensPedido.values()) {
             System.out.println(ip.getPedido().getId());
             System.out.println(ip.getTipoRoupa().getId());
             pedido.getRoupasPedido().add(ip);
@@ -83,7 +91,7 @@ public class PedidoController {
         session.save(pedido);
         session.getTransaction().commit();
         session.close();
-        itensPedido = new ArrayList<ItemPedido>();
+        itensPedido = new TreeMap<Integer, ItemPedido>();
         
         valorTotal = 0.0;
         return "pedidoRealizado";
@@ -97,15 +105,9 @@ public class PedidoController {
     }
     
     public void removerItem(int idTipoRoupa) {
-        int index = 0;
-        for (int i = 0; i < itensPedido.size(); i++) {
-            if (itensPedido.get(i).getTipoRoupa().getId() == idTipoRoupa) {
-                index = i;
-            }
-        }
-        double valorPedido = itensPedido.get(index).getQuantidade() * itensPedido.get(index).getTipoRoupa().getPreco();
-        valorTotal = valorTotal - valorPedido;
-        itensPedido.remove(index);
+        double valorItem = itensPedido.get(idTipoRoupa).getQuantidade() * itensPedido.get(idTipoRoupa).getTipoRoupa().getPreco();
+        valorTotal = valorTotal - valorItem;
+        itensPedido.remove(idTipoRoupa);
     }
     
     public int getQuantidade() {
@@ -148,7 +150,7 @@ public class PedidoController {
         this.pedidos = pedidos;
     }
 
-    public List<ItemPedido> getItensPedido() {
+    public Map<Integer,ItemPedido> getItensPedido() {
         return itensPedido;
     }
 

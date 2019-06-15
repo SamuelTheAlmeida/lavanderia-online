@@ -54,7 +54,7 @@
                             </div>
                             <h:commandButton value="Adicionar" styleClass="btnGeral" action="#{PedidoController.adicionarItem}"></h:commandButton>
                             <br/><br/>
-                            <h:dataTable styleClass="w3-table-all w3-hoverable" value="#{PedidoController.itensPedido}" var="p">
+                            <h:dataTable styleClass="w3-table-all w3-hoverable" value="#{PedidoController.itensPedido.values()}" var="p">
                                 <h:inputHidden value="#{p.tipoRoupa.id}" id="idTipoRoupa" />
                                 <f:facet name="header">Itens do pedido</f:facet>
                                 <h:column>
