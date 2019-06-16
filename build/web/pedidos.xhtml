@@ -16,22 +16,26 @@
                 <ui:define name="content">
                     <div class="col-md-2 col-sm-4">
                         <div class="dados-header">
-                          <form class="form-horizontal">
+                         <h:form class="form-horizontal">
                             <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                               <legend>Meus pedidos</legend>
                                 <div class="form-group">
                                   <label class="col-md-4 control-label" for="buscarPedido">Buscar pedido:</label>
-                                  <input type="text" name="buscarPedido" class="input-md"/>
+                                  <h:inputText id="inputNumeroPedido" styleClass="input-md" value="#{PedidoController.numPedidoPesquisa}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+                                  <h:commandButton value="Pesquisar" styleClass="mx-3 btn btn-success btn-sm" action="#{PedidoController.listar}">
+                                  </h:commandButton>
+                                  <h:commandButton value="Ver todos" styleClass="mx-3 btn btn-secondary btn-sm" action="#{PedidoController.limparFiltros}">
+                                  </h:commandButton>                                  
                                 </div>
                               <div style="overflow-x:auto;">                  
-                                <h:dataTable class="w3-table-all w3-hoverable" value="#{PedidoController.pedidos}" var="p">
+                                <h:dataTable class="w3-table-all w3-hoverable" value="#{PedidoController.pedidosDataModel}" var="p">
                                     <h:column>
                                         <f:facet name="header">Número</f:facet>
                                         #{p.id}
                                     </h:column>
                                     <h:column>
-                                        <f:facet name="header">Data/Hora</f:facet>
-                                        15/06/2019
+                                        <f:facet name="header">Data</f:facet>
+                                        #{p.dataFormatada}
                                     </h:column>  
                                     <h:column>
                                         <f:facet name="header">Valor Total</f:facet>
@@ -45,13 +49,23 @@
                                     </h:column> 
                                     <h:column>
                                         <f:facet name="header">Status</f:facet>
-                                        Pendente
-                                    </h:column>                   
+                                        #{p.status}
+                                    </h:column> 
+                                    <h:column>
+                                        <f:facet name="header">Detalhes</f:facet>
+                                        <h:commandButton value="Detalhes" styleClass="btn btn-info btn-sm" action="#{PedidoController.detalhesPedido}">
+                                           </h:commandButton>
+                                    </h:column>  
+                                    <h:column>
+                                       <f:facet name="header">Cancelar</f:facet>
+                                            <h:commandButton value="Remover" styleClass="btn btn-danger btn-sm" action="#{PedidoController.cancelarPedido}">
+                                           </h:commandButton>
+                                    </h:column>  
                                 </h:dataTable>
                               </div>                      
                             </fieldset>
                             <br/>                    
-                          </form>
+                          </h:form>
                         </div>
                     </div>
                 </ui:define>	

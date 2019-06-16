@@ -35,4 +35,39 @@ public class PedidoDAO {
         session.close();
         return lista;
     }
+    
+    public List<Pedido> listar(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Pedido where id = :id");
+        select.setInteger("id", id);
+        List<Pedido> lista = select.list();
+        session.getTransaction().commit();
+        session.close();
+        return lista;
+    }    
+    
+    public Pedido obter(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Pedido where id = :id");
+        select.setInteger("id", id);
+        Pedido pedido = (Pedido)select.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+        return pedido;
+    }
+    
+    public void remover(int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("delete Pedido where id = :id");
+        select.setInteger("id", id);
+        select.executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
 }

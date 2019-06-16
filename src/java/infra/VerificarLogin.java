@@ -22,7 +22,7 @@ public class VerificarLogin implements PhaseListener {
         FacesContext context = event.getFacesContext();
         String viewId = context.getViewRoot().getViewId();
         LoginMB loginMB = context.getApplication().evaluateExpressionGet(context, "#{loginMB}", LoginMB.class);
-                
+        System.out.println("viewid: " + viewId);
         // verifica se o usuario ja está logado e está tentando entrar na pagina de login ou cadastro
         if ( (viewId.equals("/login.xhtml") || viewId.equals("/cadastroCliente.xhtml")) && loginMB.isLogado()  ) {
             NavigationHandler handler = context.getApplication().

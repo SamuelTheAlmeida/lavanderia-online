@@ -54,7 +54,7 @@ public class UsuarioController {
 
         dao.cadastrarUsuario(cliente.getUsuario());
         dao.cadastrarCliente(cliente);
-        return "pedidos";
+        return "pedidos?faces-redirect=true";
         
     }
     

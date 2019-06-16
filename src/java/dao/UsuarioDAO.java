@@ -57,16 +57,19 @@ public class UsuarioDAO {
         return lista.size() > 0;
    }
    
-   public boolean autenticar(Usuario usuario) {
+   public Usuario autenticar(Usuario usuario) {
+        boolean result = false;
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.clear();
         Query select = session.createQuery("from Usuario where email = ? and senha = ?");
         select.setString(0, usuario.getEmail());
         select.setString(1, usuario.getSenha());
-        List<Usuario> lista = select.list();
+        Usuario userResult = (Usuario)select.uniqueResult();
         session.getTransaction().commit();
         session.close();
-        return lista.size() > 0;       
+        return userResult;
    }
+   
+   
 }

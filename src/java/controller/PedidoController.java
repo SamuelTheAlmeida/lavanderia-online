@@ -14,9 +14,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import model.TipoRoupa;
+import util.Constantes;
 
 @ManagedBean(name="PedidoController")
 @SessionScoped
@@ -24,12 +27,17 @@ public class PedidoController {
     @javax.faces.bean.ManagedProperty(value="#{loginMB}")
     private LoginMB loginMB;
     private Pedido pedido = new Pedido();
-    private List<Pedido> pedidos = new ArrayList<Pedido>();  
+    private Integer numPedidoPesquisa;
+    private List<Pedido> pedidos = new ArrayList<Pedido>(); 
+    private DataModel<Pedido> pedidosDataModel;
+    
     private ItemPedido itemPedido;
     private Map<Integer, ItemPedido> itensPedido;
+    
     private Integer tipoRoupaSelecionada;
     List<TipoRoupa> listTipoRoupa;
     private Map<String, Integer> mapTipoRoupa = new HashMap<String, Integer>();
+    
     private int quantidade;
     private double valorTotal;
     
@@ -44,7 +52,8 @@ public class PedidoController {
     }
     
     public void verificarPerfil() {
-        if (loginMB.getUsuario().getIdPerfil() != util.Perfil.PERFIL_CLIENTE) {
+        System.out.println("logado: " + loginMB.getUsuario().getIdPerfil());
+        if (loginMB.getUsuario().getIdPerfil() != util.Constantes.PERFIL_CLIENTE) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
             } catch (IOException ex) {
@@ -103,11 +112,46 @@ public class PedidoController {
         // limpa as variáveis
         itensPedido = new TreeMap<Integer, ItemPedido>();
         valorTotal = 0.0;
-        return "pedidoRealizado";
+        return "detalhesPedido?faces-redirect=true";
     }
     
     public void listar() {
-        this.pedidos = new PedidoDAO().listar();
+        if (this.numPedidoPesquisa != null) {
+            this.pedidos = new PedidoDAO().listar(this.numPedidoPesquisa);
+            
+        } else {
+            this.pedidos = new PedidoDAO().listar();
+        }
+        pedidosDataModel = new ListDataModel<Pedido>(this.pedidos);
+    }
+    
+    public void limparFiltros() {
+        this.numPedidoPesquisa = null;
+        listar();
+    }
+    
+    public String detalhesPedido() {
+        Pedido pedidoClicado = pedidosDataModel.getRowData();
+        Pedido pedido = new PedidoDAO().obter(pedidoClicado.getId());
+        if (pedido != null) {
+            this.pedido = pedido;
+            return "detalhesPedido?faces-redirect=true";
+        } else {
+            return null;
+        }
+    }
+    
+    public String cancelarPedido() {
+        Pedido pedidoClicado = pedidosDataModel.getRowData();
+        Pedido pedido = new PedidoDAO().obter(pedidoClicado.getId());
+        if (pedido.getIdStatus() != Constantes.STATUS_AGUARDANDO) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Só é possivel cancelar pedidos pendentes!"));                        
+            return null;
+        } else {
+            new PedidoDAO().remover(pedido.getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pedido " + pedido.getId() + " cancelado com sucesso!"));            
+            return null;
+        }
     }
     
     public void removerItem(int idTipoRoupa) {
@@ -164,4 +208,21 @@ public class PedidoController {
         this.loginMB = loginMB;
     }
 
+    public DataModel<Pedido> getPedidosDataModel() {
+        listar();
+        return pedidosDataModel;
+    }
+
+    public void setPedidosDataModel(DataModel<Pedido> pedidosDataModel) {
+        this.pedidosDataModel = pedidosDataModel;
+    }
+
+    public Integer getNumPedidoPesquisa() {
+        return numPedidoPesquisa;
+    }
+
+    public void setNumPedidoPesquisa(Integer numPedidoPesquisa) {
+        this.numPedidoPesquisa = numPedidoPesquisa;
+    }
+    
 }

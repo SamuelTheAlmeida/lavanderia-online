@@ -7,29 +7,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <body>
 	    <ui:composition>
-	
-            <div class="col-md-2 col-sm-4 sidebar1">
-                <div class="logo">
-                    <h:graphicImage name="images/user.png" class="img-responsive center-block" alt="Logo" />
-                </div>
-                <br/>
-                <div class="left-navigation">
-                    <ul class="list">
-                        <h5><strong>Nome Usuário</strong></h5>
-                        <li><a href="perfilUsuario.xhtml">Perfil &nbsp;<i class="fa fa-user" aria-hidden="true"></i></a></li>
-                        <li class="active-menu">Criar Pedido &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></li>
-                        <li><a href="pedidos.xhtml">Visualizar Pedidos &nbsp;<i class="fa fa-eye" aria-hidden="true"></i></a></li>
-                        <li>
-                            <h:form>
-                                <h:commandLink action="#{loginMB.logout()}" value="Sair ">
-                                    <h:outputText value="" class="fa fa-sign-out-alt" />
-                                </h:commandLink>
-                            </h:form>    
-                            </li>
-                    </ul>
-                </div>
-            </div>
-				
-	    </ui:composition>
+                <ul class="list">
+                    <h5><strong>#{loginMB.usuario.nome}</strong></h5>
+                    <li class="#{view.viewId.equals('/novoPedido.xhtml')?'active-menu':''}"><a href="novoPedido.xhtml">Criar Pedido <i class="fa fa-plus" aria-hidden="true"></i></a></li>
+                    <li class="#{view.viewId.equals('/pedidos.xhtml')? 'active-menu' : ''}"><a href="pedidos.xhtml">Visualizar Pedidos <i class="fa fa-eye" aria-hidden="true"></i></a></li>		
+                    <li>
+                        <h:form>
+                            <h:commandLink action="#{loginMB.logout()}" value="Sair ">
+                                <h:outputText value="" class="fa fa-sign-out-alt" />
+                            </h:commandLink>
+                        </h:form>    
+                    </li>   
+                </ul>
+            </ui:composition>
     </body>
 </html>

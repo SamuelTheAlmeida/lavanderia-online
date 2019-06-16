@@ -31,7 +31,9 @@ public class LoginMB {
         UsuarioDAO dao = new UsuarioDAO();
         String senha = this.usuario.getSenha();
         this.usuario.setSenha(Utils.MD5(senha));
-        if (dao.autenticar(usuario)) {
+        this.usuario = dao.autenticar(usuario);
+        if (this.usuario != null) {
+            System.out.println("mb: " + usuario.getIdPerfil());
             return "pedidos?faces-redirect=true";
         } else {
             this.usuario = new Usuario();

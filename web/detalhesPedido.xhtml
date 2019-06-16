@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    
+    <f:metadata>
+        <f:viewAction action="#{PedidoController.verificarPerfil}" />
+    </f:metadata>
+    <h:body>
+        <ui:composition template="/template/common/commonLayout.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <fieldset class="px-5 py-3 my-5">
+                        <legend>Detalhes do Pedido</legend>
+                        <h2>Pedido número <h:outputText value="#{PedidoController.pedido.id}"/></h2>
+                        <div class="dadosPessoais">
+                            <h4>Descrição</h4>
+                            <ui:repeat var="p" value="#{PedidoController.pedido.roupasPedido.toArray()}" varStatus="status">
+                                <p>#{p.quantidade} #{p.tipoRoupa.descricao}</p>
+                            </ui:repeat>
+                            <h3>Valor total:
+                                <h:outputText value="#{PedidoController.pedido.valorTotal}" >
+                                    <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                                </h:outputText>
+                            </h3>
+                            <p class="text-danger">Prazo de entrega: #{PedidoController.pedido.prazo} dias úteis</p>
+                            <!-- <h4>Endereço de entrega</h4>
+                            <p>AQUI ENTRA A RUA</p>
+                            <p>AQUI VAI CIDADE - ESTADO</p> !-->
+                        </div>
+                    </fieldset>
+                </h:form>               
+            </ui:define>
+        </ui:composition>
+    </h:body>
+
+</html>

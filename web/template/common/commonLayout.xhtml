@@ -21,10 +21,18 @@
     
     <h:body>
         <div class="container-fluid">
-            <div class="row">					
-                <ui:insert name="header" >
-                  <ui:include src="/template/common/commonHeader.xhtml" />
-                </ui:insert>
+            <div class="row">
+                <div class="col-md-2 col-sm-4 sidebar1">
+                    <div class="logo">
+                        <h:graphicImage name="images/user.png" class="img-responsive center-block" alt="Logo" />
+                    </div>
+                    <br/>
+                    <div class="left-navigation">
+                        <ui:insert name="header" >
+                          <ui:include src="/template/common/commonHeader.xhtml" />
+                        </ui:insert>
+                    </div>
+                </div>                            
 
                 <ui:insert name="content" >
                   <ui:include src="/template/common/commonContent.xhtml" />
