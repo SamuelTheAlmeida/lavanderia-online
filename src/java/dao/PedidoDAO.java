@@ -33,7 +33,6 @@ public class PedidoDAO {
         List<Pedido> lista = select.list();
         session.getTransaction().commit();
         session.close();
-        
         return lista;
     }
 }

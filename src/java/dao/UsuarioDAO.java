@@ -5,6 +5,7 @@
  */
 package dao;
 import java.util.List;
+import model.Cliente;
 import model.Pedido;
 import model.Usuario;
 import org.hibernate.Query;
@@ -13,7 +14,7 @@ import util.HibernateUtil;
 
 
 public class UsuarioDAO {
-   public void cadastrar(Usuario usuario) {
+   public void cadastrarUsuario(Usuario usuario) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.clear();
@@ -21,4 +22,51 @@ public class UsuarioDAO {
         session.getTransaction().commit();
         session.close();
     }
+   
+    public void cadastrarCliente(Cliente cliente) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        session.save(cliente);
+        session.getTransaction().commit();
+        session.close();
+    }
+   
+   public boolean cpfExiste(String cpf) {
+        System.out.println(cpf);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Cliente where cpf = ?");
+        select.setString(0, cpf);
+        List<Cliente> lista = select.list();
+        session.getTransaction().commit();
+        session.close();
+        return lista.size() > 0;
+   }
+   
+   public boolean emailExiste(String email) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Usuario where email = ?");
+        select.setString(0, email);
+        List<Cliente> lista = select.list();
+        session.getTransaction().commit();
+        session.close();
+        return lista.size() > 0;
+   }
+   
+   public boolean autenticar(Usuario usuario) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Usuario where email = ? and senha = ?");
+        select.setString(0, usuario.getEmail());
+        select.setString(1, usuario.getSenha());
+        List<Usuario> lista = select.list();
+        session.getTransaction().commit();
+        session.close();
+        return lista.size() > 0;       
+   }
 }

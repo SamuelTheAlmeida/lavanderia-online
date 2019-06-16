@@ -39,15 +39,19 @@
 				<div class="nome-logo">Lavanderia On-line</div>
 				<div class="user">
 					<i class="fa fa-user-circle" aria-hidden="true"></i>
-					<input type="text" name="user" class="input" placeholder="Usuário"/>
+                                        <h:inputText class="input" value="#{UsuarioController.usuarioLogin.email}">
+                                            <f:passThroughAttribute name="placeholder" value="Email"></f:passThroughAttribute>
+                                        </h:inputText>
 				</div>
 
 				<div class="senha">
 					<i class="fa fa-lock" aria-hidden="true"></i>
-					<input type="password" name="password" class="input" placeholder="Senha"/>
+                                        <h:inputSecret required="required" value="#{UsuarioController.usuarioLogin.senha}" class="input">
+                                            <f:passThroughAttribute name="placeholder" value="Senha"></f:passThroughAttribute>
+                                        </h:inputSecret>                                        
 				</div>
 
-				<button class="botao">Entrar</button>
+                                <h:commandButton class="botao" value="Entrar" action="#{UsuarioController.autenticar}"></h:commandButton>
 				<br/>
 				<div class="linksenha">
 					<p>Não tem uma conta? <a href="cadastroCliente.xhtml"> Crie uma!</a></p>

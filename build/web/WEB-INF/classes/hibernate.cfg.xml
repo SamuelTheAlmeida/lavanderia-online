@@ -45,14 +45,14 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:derby://localhost:1527/lavanderia</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">admin</property>
-    <mapping class="model.Pedido"/>
-    <mapping class="model.ItemPedido"/>
-    <mapping class="model.TipoRoupa"/>
-    <mapping class="model.ItemPedidoId"/>
-    <mapping class="model.Estado"/>
     <mapping class="model.Cidade"/>
-    <mapping class="model.Usuario"/>
     <mapping class="model.Cliente"/>
+    <mapping class="model.Estado"/>
     <mapping class="model.Funcionario"/>
+    <mapping class="model.ItemPedido"/>
+    <mapping class="model.ItemPedidoId"/>
+    <mapping class="model.Pedido"/>
+    <mapping class="model.TipoRoupa"/>
+    <mapping class="model.Usuario"/>
   </session-factory>
 </hibernate-configuration>

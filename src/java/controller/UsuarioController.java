@@ -15,6 +15,9 @@ import javax.faces.bean.SessionScoped;
 import model.Cliente;
 import model.Usuario;
 import java.security.*;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import model.Cliente;
 
 @ManagedBean(name="UsuarioController")
@@ -22,33 +25,53 @@ import model.Cliente;
 public class UsuarioController {
     
     private model.Cliente cliente;
+    private Usuario usuarioLogin;
     
     public UsuarioController() {
         cliente = new Cliente();
+        usuarioLogin = new Usuario();
     }
 
-    public void salvar() {
-        System.out.println("cpf: " + cliente.getCpf());
-        System.out.println("endereco: " + cliente.getEndereco());
-        System.out.println("cidade: " + cliente.getCidade().getNome());
-        System.out.println("estado: " + cliente.getCidade().getEstado().getSigla());
-        System.out.println("telefone: " + cliente.getTelefone());
-        System.out.println("id usuario: " + cliente.getUsuario().getId());
-        System.out.println("email: " + cliente.getUsuario().getEmail());
-        System.out.println("senha: " + cliente.getUsuario().getSenha());
-        System.out.println("nome: " + cliente.getUsuario().getNome());
-        System.out.println("idperfil: " + cliente.getUsuario().getIdPerfil());
+    public String salvar() {
+        UsuarioDAO dao = new UsuarioDAO();
+
+        String cpf = this.cliente.getCpf().replaceAll("[^a-zA-Z0-9]+","");
+        this.cliente.setCpf(cpf);
+
+        if (dao.cpfExiste(cliente.getCpf())) {
+            FacesContext.getCurrentInstance().addMessage("cadastroCliente:erroCadastro", new FacesMessage("CPF já cadastrado"));
+            return null;
+        }
+        
+        if (dao.emailExiste(cliente.getUsuario().getEmail())) {
+            FacesContext.getCurrentInstance().addMessage("cadastroCliente:erroCadastro", new FacesMessage("Email já cadastrado"));
+            return null;
+        }
         
         String senha = this.cliente.getUsuario().getSenha();
         this.cliente.getUsuario().setSenha(MD5(senha));
         this.cliente.getUsuario().setIdPerfil(1);
+        String telefone = this.cliente.getTelefone().replaceAll("[^a-zA-Z]+","");
+        this.cliente.setTelefone(telefone);
 
-        System.out.println("email: " + cliente.getUsuario().getEmail());
-        System.out.println("senha: " + cliente.getUsuario().getSenha());
-        System.out.println("nome: " + cliente.getUsuario().getNome());
-        System.out.println("idperfil: " + cliente.getUsuario().getIdPerfil());
-        new UsuarioDAO().cadastrar(cliente.getUsuario());
+        dao.cadastrarUsuario(cliente.getUsuario());
+        dao.cadastrarCliente(cliente);
+        return "pedidos";
         
+    }
+    
+    public String autenticar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        UsuarioDAO dao = new UsuarioDAO();
+        String senha = this.usuarioLogin.getSenha();
+        this.usuarioLogin.setSenha(MD5(senha));
+        if (dao.autenticar(usuarioLogin)) {
+            context.getExternalContext().getSessionMap().put("usuario", this.usuarioLogin);
+            return "pedidos";
+        } else {
+            context.addMessage(null, new FacesMessage("Login ou senha incorretos"));  
+            return null;
+        }
     }
 
     public model.Cliente getCliente() {
@@ -72,5 +95,17 @@ public class UsuarioController {
          }
          return null;
     }
+
+    public Usuario getUsuarioLogin() {
+        return usuarioLogin;
+    }
+
+    public void setUsuarioLogin(Usuario usuarioLogin) {
+        this.usuarioLogin = usuarioLogin;
+    }
+    
+    
+    
+    
     
 }

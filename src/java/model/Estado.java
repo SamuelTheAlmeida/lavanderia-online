@@ -6,12 +6,13 @@
 package model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @javax.persistence.Entity
-@javax.persistence.Table(name="Cidade")
+@javax.persistence.Table(name="Estado")
 public class Estado implements Serializable{
     private int id;
     private String sigla;

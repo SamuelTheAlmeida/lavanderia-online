@@ -7,6 +7,7 @@ package model;
 
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,7 +52,7 @@ public class Cliente implements Serializable{
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-
+    
     @OneToOne(fetch = FetchType.EAGER)
     public Cidade getCidade() {
         return cidade;

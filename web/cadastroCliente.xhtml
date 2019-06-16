@@ -36,21 +36,32 @@
       <div class="logo mt-3 mb-3">
         <img src="resources/images/lavanderia-logo.png" class="logo-laundry"/>
       </div>
-          <h:form class="text-left" style="font-size: 0.8em">
+          <h:form id="cadastroCliente" class="text-left" style="font-size: 0.8em">
+              <div class="form-row">
+                <h:messages id="msg_erroCadastro" for="erroCadastro" errorClass="text-danger"/><br/>
+              </div>
             <div class="form-row">
-              <div class="form-group col-md-10">
+                
+              <div class="form-group col-md-6">
                 <label for="inputNome">Nome Completo</label>
-                <h:inputText id="inputNome" styleClass="form-control" value="#{UsuarioController.cliente.usuario.nome}">
+                <h:inputText id="inputNome" styleClass="form-control inputTexto" value="#{UsuarioController.cliente.usuario.nome}">
                     <f:passThroughAttribute name="placeholder" value="Nome Completo" />
                 </h:inputText>
               </div>
-            <div class="form-group col-md-2">
+              <div class="form-group col-md-2">
                 <label for="inputSexo">Sexo</label>
                 <h:selectOneMenu id="inputSexo" value="#{UsuarioController.cliente.sexo}" class="form-control">
                         <f:selectItem id="M" itemLabel="Masculino" itemValue="M" />
                         <f:selectItem id="F" itemLabel="Feminino" itemValue="F" />
                 </h:selectOneMenu>                
-              </div>              
+              </div> 
+              <div class="form-group col-md-4">
+                <label for="inputTelefone">Telefone</label>
+                <h:inputText id="inputTelefone" styleClass="form-control inputTelefone" value="#{UsuarioController.cliente.telefone}">
+                    <f:passThroughAttribute name="placeholder" value="Telefone" />
+                    <f:passThroughAttribute name="pattern" value="\([0-9]{2}\)[\s][0-9]{4}-[0-9]{4,5}" />
+                </h:inputText>    
+              </div>    
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
@@ -59,28 +70,28 @@
                     <f:passThroughAttribute name="placeholder" value="Endereço"></f:passThroughAttribute>
                 </h:inputText>
               </div>
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-2">
                 <label for="inputEstado">Estado</label>
-                <select id="inputEstado" class="form-control">
-                  <option selected="selected">Selecione</option>
-                  <option>Paraná</option>
-                  <option>São Paulo</option>
-                  <option>Rio de Janeiro</option>
-                  <option>Minas Gerais</option>
-                  <option>Acre</option>
-                </select>
+                <h:selectOneMenu id="inputEstado" value="#{UsuarioController.cliente.cidade.estado.id}" class="form-control">
+                        <f:selectItem  itemLabel="PR" itemValue="1" />
+                        <f:selectItem itemLabel="SP" itemValue="2" />
+                </h:selectOneMenu>  
               </div>                 
-              <div class="form-group col-md-3">
+              <div class="form-group col-md-4">
                 <label for="inputCidade">Cidade</label>
-                <input type="text" class="form-control" id="inputCidade" placeholder="Cidade"/>
+                <h:selectOneMenu id="inputCidade" value="#{UsuarioController.cliente.cidade.id}" class="form-control">
+                        <f:selectItem  itemLabel="Curitiba" itemValue="1" />
+                        <f:selectItem  itemLabel="Pinhais" itemValue="2" />
+                </h:selectOneMenu>  
               </div>      
+                
  
             </div>  
                       
             <div class="form-row">          
               <div class="form-group col-md-4">
                 <label for="inputCPF">CPF</label>            
-                <h:inputText class="form-control" id="inputCPF" value="#{UsuarioController.cliente.cpf}">
+                <h:inputText class="form-control inputCPF" id="inputCPF" value="#{UsuarioController.cliente.cpf}">
                     <f:passThroughAttribute name="placeholder" value="CPF"></f:passThroughAttribute>
                 </h:inputText>
               </div>
@@ -92,7 +103,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="inputSenha">Senha</label>
-                <h:inputSecret value="#{UsuarioController.cliente.usuario.senha}" class="form-control" id="inputSenha">
+                <h:inputSecret required="true" value="#{UsuarioController.cliente.usuario.senha}" class="form-control" id="inputSenha">
                     <f:passThroughAttribute name="placeholder" value="Senha"></f:passThroughAttribute>
                 </h:inputSecret>
               </div>                            
@@ -103,5 +114,12 @@
   </div>
 
 </h:body>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script>
+        $(document).ready(function () { 
+            $(".inputCPF").mask('000.000.000-00', {reverse: true});
+        });
+        $(".inputTelefone").mask("(00) 0000-00009");
+</script>
 </html>
