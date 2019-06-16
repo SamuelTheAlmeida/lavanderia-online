@@ -3,15 +3,246 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Inserir pessoa</title>
-    </h:head>
-    <h:body>
-    	<h2>JSF 2.0 Hello World Example - helloworld.xhtml</h2>
-    	<h:form>
-    	   <h:inputText value="#{PessoaMB.pessoa.nome}"></h:inputText>
-    	   <h:commandButton value="Cadastrar nome" action="#{PessoaMB.cadastrar}"></h:commandButton>
-    	</h:form>
-    </h:body>
+      xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"/> 
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-md bg-primary navbar-dark">
+    <div class="container">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <a class="navbar-brand mt-3" href="#">
+        <h:graphicImage name="images/brand.ico" height="42" width="42" /><b>  Lavanderia On-Line</b>
+      </a>
+      <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#contato"><i class="fa d-inline fa-lg fa-envelope-o"></i> Contato</a>
+          </li>
+        </ul>
+        <a href="login.xhtml" class="btn navbar-btn ml-2 text-white btn-secondary"><i class="fa d-inline fa-lg fa-user-circle-o"></i> Entrar</a>
+      </div>
+    </div>
+  </nav>
+  <div class="py-5 text-center opaque-overlay" style="background: url(&quot;resources/images/banner.jpg&quot;) center center / 100% 100% no-repeat;">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-md-12 text-white">
+          <h1 class="display-3 mb-4">Roupa Suja Nunca Mais</h1>
+          <p class="lead mb-5 w-100">PRATICIDADE E ECONOMIA NA HORA DE CUIDAR DE SUAS ROUPAS</p>
+          <a href="login.xhtml" class="btn btn-lg btn-primary mx-1">FAÇA SEU PEDIDO</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="mb-4 text-primary">Nossos Serviços</h1>
+          <p class="lead">Conheça todos os serviços ofertados pela Lavanderia LOL</p>
+          <div class="row text-left mt-5">
+            <div class="col-md-4 my-3">
+              <div class="row mb-3">
+                <div class="text-center col-2">
+                  <h:graphicImage name="images/delivery.ico" height="42" width="42" />
+                </div>
+                <div class="align-self-center col-10">
+                  <h5 class="text-secondary"><b>Delivery</b></h5>
+                </div>
+              </div>
+              <p>A Lavanderia LOL conta com um serviço de Delivery para que você tenha suas roupas no conforto de sua casa.</p>
+            </div>
+            <div class="col-md-4 my-3">
+              <div class="row mb-3">
+                <div class="text-center col-2">
+                    <h:graphicImage name="images/seco.ico" height="42" width="42" />
+                </div>
+                <div class="align-self-center col-10">
+                  <h5 class="text-secondary"><b>Seco</b></h5>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis est vitae sapien placerat fringilla. Aenean at turpis eget elit rutrum efficitur.</p>
+            </div>
+            <div class="col-md-4 my-3">
+              <div class="row mb-3">
+                <div class="text-center col-2">
+                  <h:graphicImage name="images/toalhas.ico" height="42" width="42" />
+                </div>
+                <div class="align-self-center col-10">
+                  <h5 class="text-secondary"><b>Cama, Mesa e Banho</b></h5>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis est vitae sapien placerat fringilla. Aenean at turpis eget elit rutrum efficitur.</p>
+            </div>
+            <div class="col-md-4 my-3">
+              <div class="row mb-3">
+                <div class="text-center col-2">
+                  <h:graphicImage name="images/manchas.ico" height="42" width="42" />
+                </div>
+                <div class="align-self-center col-10">
+                  <h5 class="text-secondary"><b>Remoção de manchas</b></h5>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis est vitae sapien placerat fringilla. Aenean at turpis eget elit rutrum efficitur.</p>
+            </div>
+            <div class="col-md-4 my-3">
+              <div class="row mb-3">
+                <div class="text-center col-2">
+                   <h:graphicImage name="images/passadoria.ico" height="42" width="42" />
+                </div>
+                <div class="align-self-center col-10">
+                  <h5 class="text-secondary"><b>Passadoria</b></h5>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis est vitae sapien placerat fringilla. Aenean at turpis eget elit rutrum efficitur.</p>
+            </div>
+            <div class="col-md-4 my-3">
+              <div class="row mb-3">
+                <div class="text-center col-2">
+                  <h:graphicImage name="images/servicos.ico" height="42" width="42" />
+                </div>
+                <div class="align-self-center col-10">
+                  <h5 class="text-secondary"><b>Outros serviços</b></h5>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis est vitae sapien placerat fringilla. Aenean at turpis eget elit rutrum efficitur.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-5 text-center bg-secondary gradient-overlay">
+    <h1 class="planos text-white"> Nossos Planos </h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card p-5 m-1">
+            <div class="card-block">
+              <p class="lead"><i>Padrão</i></p>
+            </div>
+            <div class="card-block my-3">
+              <h1><b>R$50</b></h1>
+              <p>Mensal</p>
+              <hr/>
+              <p><b>10</b> Lavagens</p>
+              <hr/>
+              <p><b>5</b>kg</p>
+            </div>
+            <div class="card-block">
+              <a href="#" class="btn btn-secondary">Assinar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card p-5 m-1">
+            <div class="card-block">
+              <p class="lead"><i>Premium</i></p>
+            </div>
+            <div class="card-block my-3">
+              <h1><b>R$75</b></h1>
+              <p>Mensal</p>
+              <hr/>
+              <p><b>17</b> Lavagens</p>
+              <hr/>
+              <p><b>7</b> kg</p>
+            </div>
+            <div class="card-block">
+              <a href="#" class="btn btn-secondary">Assinar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-primary p-5 m-1 text-white">
+            <div class="card-block">
+              <p class="lead"><i>Econômico</i></p>
+            </div>
+            <div class="card-block my-3">
+              <h1><b>R$100</b></h1>
+              <p>Mensal</p>
+              <hr/>
+              <p><b>30</b> Lavagens</p>
+              <hr/>
+              <p><b>10</b> kg</p>
+            </div>
+            <div class="card-block">
+              <a href="#" class="btn btn-light">Assinar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card p-5 m-1">
+            <div class="card-block">
+              <p class="lead"><i>Avançado</i></p>
+            </div>
+            <div class="card-block my-3">
+              <h1><b>R$150</b></h1>
+              <p>Mensal</p>
+              <hr/>
+              <p><b>37</b> Lavagens</p>
+              <hr/>
+              <p><b>12</b> kg</p>
+            </div>
+            <div class="card-block">
+              <a href="#" class="btn btn-secondary">Assinar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 text-white opaque-overlay" style="background-image: url(&quot;resources/images/contato.jpg&quot;);">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <a name="contato"></a>
+          <h1 class="text-gray-dark">Fale Conosco</h1>
+          <form class="" method="post" action="#">
+            <div class="form-group"> <label>Endereço de E-mail</label>
+              <input type="email" name="email" class="form-control" placeholder="E-mail"/> </div>
+            <div class="form-group"> <label>Mensagem</label> <textarea style="resize: none" placeholder="Escreva sua Mensagem" cols="58" class="form-control" rows="6" id="Textarea"></textarea> </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 bg-dark text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 text-center align-self-center">
+          <p class="mb-5"> <strong>LOL - Lavanderia On-Line</strong>
+            <br/>R. Dr. Alcídes Viêira Arco-Verde, 1225
+            <br/>Jardim das Americas, Curitiba - PR, 81520-260 </p>
+          <div class="my-3 row">
+            <div class="col-4">
+              <a href="#" target="_blank"><i class="fa fa-3x fa-facebook"></i></a>
+            </div>
+            <div class="col-4">
+              <a href="#" target="_blank"><i class="fa fa-3x fa-twitter"></i></a>
+            </div>
+            <div class="col-4">
+              <a href="#" target="_blank"><i class="fa fa-3x fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 p-0">
+          <h:graphicImage name="images/mapa.png" class="img-fluid" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+</body>
+
 </html>

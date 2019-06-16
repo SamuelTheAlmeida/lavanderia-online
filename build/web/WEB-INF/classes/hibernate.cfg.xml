@@ -49,5 +49,10 @@ Contributor(s):
     <mapping class="model.ItemPedido"/>
     <mapping class="model.TipoRoupa"/>
     <mapping class="model.ItemPedidoId"/>
+    <mapping class="model.Estado"/>
+    <mapping class="model.Cidade"/>
+    <mapping class="model.Usuario"/>
+    <mapping class="model.Cliente"/>
+    <mapping class="model.Funcionario"/>
   </session-factory>
 </hibernate-configuration>

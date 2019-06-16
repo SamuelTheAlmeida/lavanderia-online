@@ -29,14 +29,14 @@
                                         15/06/2019
                                     </h:column>  
                                     <h:column>
-                                        <f:facet name="header">Descrição</f:facet>
-                                        5 camisetas
-                                    </h:column> 
-                                    <h:column>
                                         <f:facet name="header">Valor Total</f:facet>
                                         <h:outputText value="#{p.valorTotal}" >
                                             <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
                                         </h:outputText>
+                                    </h:column> 
+                                    [<h:column>
+                                        <f:facet name="header">Prazo</f:facet>
+                                        #{p.roupasPedido.size()} dias
                                     </h:column> 
                                     <h:column>
                                         <f:facet name="header">Status</f:facet>

@@ -1,0 +1,107 @@
+body{
+	font-family: 'Quicksand', sans-serif;
+background: #ECE9E6;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #FFFFFF, #ECE9E6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.content{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.login{
+	display: inline-block;
+	margin: auto;
+	border-width: 1px;
+	border-radius: 2px;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.formulario{
+	display: inline-block;
+	position: relative;
+	padding: 90px 60px 60px 60px;
+	color: gray;
+	background-color: white;
+	box-shadow: 0 4px 8px 0 black, 0 6px 20px 0 gray;
+}
+.nome-logo{
+	font-family: 'Lobster', cursive;
+	font-size: 1.3em;
+	color: #333333;
+	position: relative;
+	text-shadow: 1px 1px 2px gray;
+	bottom: 30px;
+}
+input{
+	border-style: solid;
+	border-width: 0.5px;
+	border-color: white;
+	border-bottom: 1px solid gray;
+	text-align: center;
+	color: gray;
+	font-size: 18px !important;
+	font-family: 'Quicksand', sans-serif;
+}
+
+select {
+  	height: 2.75em !important;
+}
+
+
+.botao{
+	border-style: solid;
+	border-width: 1px;
+	border-color:  #007bff;
+	background-color:  #007bff;
+	height: 30px;
+	width: 120px;
+	color: white;
+	font-weight: bold;
+	font-size: 15px !important;
+	font-family: 'Quicksand', sans-serif !important;
+}
+
+.botao:hover{
+	box-shadow: 0 2px 4px 0 gray, 0 3px 10px 0 gray;
+	cursor: pointer;
+}
+
+.linksenha:hover a{
+    color:  #007bff;
+    cursor: pointer;
+		text-decoration: none;
+}
+a:link{
+	text-decoration: none;
+}
+.linksenha{
+	padding-top: 10px;
+	font-size: 12px;
+	font-family: 'Quicksand', sans-serif ;
+}
+
+.senha{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	position: relative;
+	margin-right:7px;
+	margin-left: 8px;
+	padding-right: 15px;
+}
+
+.senha>i{
+	 padding: 9px 10px;
+}
+.logo{
+
+}
+
+.logo-laundry{
+	width: 95px;
+	height: auto;
+}

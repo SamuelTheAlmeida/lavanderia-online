@@ -5,10 +5,34 @@
  */
 package model;
 
-/**
- *
- * @author SAMUEL
- */
-class Estado {
+import java.io.Serializable;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@javax.persistence.Entity
+@javax.persistence.Table(name="Cidade")
+public class Estado implements Serializable{
+    private int id;
+    private String sigla;
+
+   @Id
+   @GeneratedValue(strategy=GenerationType.AUTO) 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+    
     
 }

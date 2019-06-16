@@ -19,10 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
-/**
- *
- * @author SAMUEL
- */
+
 @javax.persistence.Entity
 @javax.persistence.Table(name="Pedido")
 public class Pedido implements Serializable{
@@ -66,7 +63,7 @@ public class Pedido implements Serializable{
    //     this.cliente = cliente;
    // }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.pedido", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.pedido", cascade=CascadeType.ALL)
     public Set<ItemPedido> getRoupasPedido() {
         return roupasPedido;
     }

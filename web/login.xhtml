@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+<h:head>
+	<title>Login</title>
+	<meta charset="utf-8" />
+	<link type="text/css" rel="stylesheet" href="resources/css/login.css" />
+	<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+	<link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"/>
+</h:head>
+
+<h:body>
+	<nav class="navbar navbar-expand-md bg-primary navbar-dark">
+		<div class="container">
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+			<a class="navbar-brand" href="ProjetoDac.html">
+				<img src="resources/images/brand.ico" height="42" width="42"/><b>  Lavanderia On-Line</b></a>
+			<div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+				<ul class="navbar-nav">
+				</ul>
+				<a href="index.html" class="btn navbar-btn ml-2 text-white btn-secondary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+			</div>
+		</div>
+	</nav>
+	<div class="content">
+		<div class="login">
+			<div class="logo mt-3 mb-3">
+				<img src="resources/images/lavanderia-logo.png" class="logo-laundry"/>
+			</div>
+			<h:form class="formulario">
+				<div class="nome-logo">Lavanderia On-line</div>
+				<div class="user">
+					<i class="fa fa-user-circle" aria-hidden="true"></i>
+					<input type="text" name="user" class="input" placeholder="Usuário"/>
+				</div>
+
+				<div class="senha">
+					<i class="fa fa-lock" aria-hidden="true"></i>
+					<input type="password" name="password" class="input" placeholder="Senha"/>
+				</div>
+
+				<button class="botao">Entrar</button>
+				<br/>
+				<div class="linksenha">
+					<p>Não tem uma conta? <a href="cadastroCliente.xhtml"> Crie uma!</a></p>
+				</div>
+			</h:form>
+		</div>
+	</div>
+
+</h:body>
+
+</html>

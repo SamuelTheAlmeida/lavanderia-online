@@ -134,7 +134,8 @@ public class PedidoController {
     }
 
     public List<Pedido> getPedidos() {
-        return pedidos;
+        listar();
+        return this.pedidos;
     }
     
 }

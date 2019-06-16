@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+
+<h:head>
+  <title>Login</title>
+  <meta charset="utf-8" />
+  <link type="text/css" rel="stylesheet" href="resources/css/login.css" />
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+  <link rel="stylesheet" href="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-beta.1.css" type="text/css"/>
+</h:head>
+
+<h:body>
+  <nav class="navbar navbar-expand-md bg-primary navbar-dark">
+    <div class="container">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+      <a class="navbar-brand" href="index.xhtml">
+        <img src="resources/images/brand.ico" height="42" width="42"/><b>  Lavanderia On-Line</b></a>
+      <div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
+        <ul class="navbar-nav">
+        </ul>
+        <a href="index.xhtml" class="btn navbar-btn ml-2 text-white btn-secondary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+      </div>
+    </div>
+  </nav>
+  <div class="content">
+
+    <div class="login">
+      <div class="logo mt-3 mb-3">
+        <img src="resources/images/lavanderia-logo.png" class="logo-laundry"/>
+      </div>
+          <h:form class="text-left" style="font-size: 0.8em">
+            <div class="form-row">
+              <div class="form-group col-md-10">
+                <label for="inputNome">Nome Completo</label>
+                <h:inputText id="inputNome" styleClass="form-control" value="#{UsuarioController.cliente.usuario.nome}">
+                    <f:passThroughAttribute name="placeholder" value="Nome Completo" />
+                </h:inputText>
+              </div>
+            <div class="form-group col-md-2">
+                <label for="inputSexo">Sexo</label>
+                <h:selectOneMenu id="inputSexo" value="#{UsuarioController.cliente.sexo}" class="form-control">
+                        <f:selectItem id="M" itemLabel="Masculino" itemValue="M" />
+                        <f:selectItem id="F" itemLabel="Feminino" itemValue="F" />
+                </h:selectOneMenu>                
+              </div>              
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEndereco">Endereço</label>
+                <h:inputText class="form-control" id="inputEndereco" value="#{UsuarioController.cliente.endereco}">
+                    <f:passThroughAttribute name="placeholder" value="Endereço"></f:passThroughAttribute>
+                </h:inputText>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="inputEstado">Estado</label>
+                <select id="inputEstado" class="form-control">
+                  <option selected="selected">Selecione</option>
+                  <option>Paraná</option>
+                  <option>São Paulo</option>
+                  <option>Rio de Janeiro</option>
+                  <option>Minas Gerais</option>
+                  <option>Acre</option>
+                </select>
+              </div>                 
+              <div class="form-group col-md-3">
+                <label for="inputCidade">Cidade</label>
+                <input type="text" class="form-control" id="inputCidade" placeholder="Cidade"/>
+              </div>      
+ 
+            </div>  
+                      
+            <div class="form-row">          
+              <div class="form-group col-md-4">
+                <label for="inputCPF">CPF</label>            
+                <h:inputText class="form-control" id="inputCPF" value="#{UsuarioController.cliente.cpf}">
+                    <f:passThroughAttribute name="placeholder" value="CPF"></f:passThroughAttribute>
+                </h:inputText>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputEmail">Email</label>
+                <h:inputText class="form-control" id="inputEmail" value="#{UsuarioController.cliente.usuario.email}">
+                    <f:passThroughAttribute name="placeholder" value="Email"></f:passThroughAttribute>
+                </h:inputText>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputSenha">Senha</label>
+                <h:inputSecret value="#{UsuarioController.cliente.usuario.senha}" class="form-control" id="inputSenha">
+                    <f:passThroughAttribute name="placeholder" value="Senha"></f:passThroughAttribute>
+                </h:inputSecret>
+              </div>                            
+            </div>
+              <h:commandButton class="btn btn-md botao pull-right" value="Salvar" action="#{UsuarioController.salvar}"></h:commandButton>
+          </h:form>
+    </div>
+  </div>
+
+</h:body>
+
+</html>
