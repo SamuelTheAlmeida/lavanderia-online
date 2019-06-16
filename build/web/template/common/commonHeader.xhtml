@@ -19,7 +19,13 @@
                         <li><a href="perfilUsuario.xhtml">Perfil &nbsp;<i class="fa fa-user" aria-hidden="true"></i></a></li>
                         <li class="active-menu">Criar Pedido &nbsp;<i class="fa fa-plus" aria-hidden="true"></i></li>
                         <li><a href="pedidos.xhtml">Visualizar Pedidos &nbsp;<i class="fa fa-eye" aria-hidden="true"></i></a></li>
-                        <li><a href="login.xhtml">Sair &nbsp;<i class="fa fa-sign-out-alt" aria-hidden="true"></i></a></li>
+                        <li>
+                            <h:form>
+                                <h:commandLink action="#{loginMB.logout()}" value="Sair ">
+                                    <h:outputText value="" class="fa fa-sign-out-alt" />
+                                </h:commandLink>
+                            </h:form>    
+                            </li>
                     </ul>
                 </div>
             </div>

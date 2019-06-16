@@ -19,22 +19,20 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import model.Cliente;
+import util.Utils;
 
 @ManagedBean(name="UsuarioController")
 @SessionScoped
 public class UsuarioController {
     
     private model.Cliente cliente;
-    private Usuario usuarioLogin;
     
     public UsuarioController() {
         cliente = new Cliente();
-        usuarioLogin = new Usuario();
     }
 
     public String salvar() {
         UsuarioDAO dao = new UsuarioDAO();
-
         String cpf = this.cliente.getCpf().replaceAll("[^a-zA-Z0-9]+","");
         this.cliente.setCpf(cpf);
 
@@ -49,7 +47,7 @@ public class UsuarioController {
         }
         
         String senha = this.cliente.getUsuario().getSenha();
-        this.cliente.getUsuario().setSenha(MD5(senha));
+        this.cliente.getUsuario().setSenha(Utils.MD5(senha));
         this.cliente.getUsuario().setIdPerfil(1);
         String telefone = this.cliente.getTelefone().replaceAll("[^a-zA-Z]+","");
         this.cliente.setTelefone(telefone);
@@ -60,20 +58,6 @@ public class UsuarioController {
         
     }
     
-    public String autenticar() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        UsuarioDAO dao = new UsuarioDAO();
-        String senha = this.usuarioLogin.getSenha();
-        this.usuarioLogin.setSenha(MD5(senha));
-        if (dao.autenticar(usuarioLogin)) {
-            context.getExternalContext().getSessionMap().put("usuario", this.usuarioLogin);
-            return "pedidos";
-        } else {
-            context.addMessage(null, new FacesMessage("Login ou senha incorretos"));  
-            return null;
-        }
-    }
-
     public model.Cliente getCliente() {
         return cliente;
     }
@@ -81,31 +65,5 @@ public class UsuarioController {
     public void setCliente(model.Cliente cliente) {
         this.cliente = cliente;
     }
-    
-    public String MD5(String md5) {
-        try {
-             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-             byte[] array = md.digest(md5.getBytes());
-             StringBuffer sb = new StringBuffer();
-             for (int i = 0; i < array.length; ++i) {
-               sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
-            }
-             return sb.toString();
-         } catch (java.security.NoSuchAlgorithmException e) {
-         }
-         return null;
-    }
 
-    public Usuario getUsuarioLogin() {
-        return usuarioLogin;
-    }
-
-    public void setUsuarioLogin(Usuario usuarioLogin) {
-        this.usuarioLogin = usuarioLogin;
-    }
-    
-    
-    
-    
-    
 }

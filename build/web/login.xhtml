@@ -21,12 +21,12 @@
 	<nav class="navbar navbar-expand-md bg-primary navbar-dark">
 		<div class="container">
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent" aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-			<a class="navbar-brand" href="ProjetoDac.html">
+			<a class="navbar-brand" href="index.xhtml">
 				<img src="resources/images/brand.ico" height="42" width="42"/><b>  Lavanderia On-Line</b></a>
 			<div class="collapse navbar-collapse text-center justify-content-end" id="navbar2SupportedContent">
 				<ul class="navbar-nav">
 				</ul>
-				<a href="index.html" class="btn navbar-btn ml-2 text-white btn-secondary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+				<a href="index.xhtml" class="btn navbar-btn ml-2 text-white btn-secondary"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
 			</div>
 		</div>
 	</nav>
@@ -39,19 +39,19 @@
 				<div class="nome-logo">Lavanderia On-line</div>
 				<div class="user">
 					<i class="fa fa-user-circle" aria-hidden="true"></i>
-                                        <h:inputText class="input" value="#{UsuarioController.usuarioLogin.email}">
+                                        <h:inputText class="input" value="#{loginMB.usuario.email}">
                                             <f:passThroughAttribute name="placeholder" value="Email"></f:passThroughAttribute>
                                         </h:inputText>
 				</div>
 
 				<div class="senha">
 					<i class="fa fa-lock" aria-hidden="true"></i>
-                                        <h:inputSecret required="required" value="#{UsuarioController.usuarioLogin.senha}" class="input">
+                                        <h:inputSecret required="required" value="#{loginMB.usuario.senha}" class="input">
                                             <f:passThroughAttribute name="placeholder" value="Senha"></f:passThroughAttribute>
                                         </h:inputSecret>                                        
 				</div>
 
-                                <h:commandButton class="botao" value="Entrar" action="#{UsuarioController.autenticar}"></h:commandButton>
+                                <h:commandButton class="botao" value="Entrar" action="#{loginMB.autenticar}"></h:commandButton>
 				<br/>
 				<div class="linksenha">
 					<p>Não tem uma conta? <a href="cadastroCliente.xhtml"> Crie uma!</a></p>

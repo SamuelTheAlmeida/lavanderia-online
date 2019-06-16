@@ -2,6 +2,7 @@ package controller;
 
 import dao.PedidoDAO;
 import dao.TipoRoupaDAO;
+import java.io.IOException;
 import model.Pedido;
 import model.ItemPedido;
 import javax.faces.bean.ManagedBean;
@@ -11,14 +12,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import model.TipoRoupa;
-import org.hibernate.Query;
-import util.HibernateUtil;
-import org.hibernate.Session;
 
 @ManagedBean(name="PedidoController")
 @SessionScoped
 public class PedidoController {
+    @javax.faces.bean.ManagedProperty(value="#{loginMB}")
+    private LoginMB loginMB;
     private Pedido pedido = new Pedido();
     private List<Pedido> pedidos = new ArrayList<Pedido>();  
     private ItemPedido itemPedido;
@@ -37,6 +41,16 @@ public class PedidoController {
         valorTotal = 0.0;
         quantidade = 0;
         carregarTipoRoupa();
+    }
+    
+    public void verificarPerfil() {
+        if (loginMB.getUsuario().getIdPerfil() != util.Perfil.PERFIL_CLIENTE) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void adicionarItem() {
@@ -62,6 +76,9 @@ public class PedidoController {
     }
 
     public String cadastrar(){
+        if (itensPedido.values().size() == 0) {
+            return null;
+        }
         pedido = new Pedido();
         // regra para verificar qual o maior prazo e somar valor total
         int maiorPrazo = 0;
@@ -82,8 +99,9 @@ public class PedidoController {
         
         // finalmente salva o pedido no banco
         new PedidoDAO().cadastrar(pedido);
-        itensPedido = new TreeMap<Integer, ItemPedido>();
         
+        // limpa as variáveis
+        itensPedido = new TreeMap<Integer, ItemPedido>();
         valorTotal = 0.0;
         return "pedidoRealizado";
     }
@@ -137,5 +155,13 @@ public class PedidoController {
         listar();
         return this.pedidos;
     }
-    
+
+    public LoginMB getLoginMB() {
+        return loginMB;
+    }
+
+    public void setLoginMB(LoginMB loginMB) {
+        this.loginMB = loginMB;
+    }
+
 }

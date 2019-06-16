@@ -6,6 +6,11 @@
       xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
       >
+    
+    <f:metadata>
+        <f:viewAction action="#{PedidoController.verificarPerfil}" />
+    </f:metadata>
+    
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
                 <ui:define name="content">
