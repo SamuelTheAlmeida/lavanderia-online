@@ -51,17 +51,6 @@ public class PedidoController {
         carregarTipoRoupa();
     }
     
-    public void verificarPerfil() {
-        System.out.println("logado: " + loginMB.getUsuario().getIdPerfil());
-        if (loginMB.getUsuario().getIdPerfil() != util.Constantes.PERFIL_CLIENTE) {
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-            } catch (IOException ex) {
-                Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    
     public void adicionarItem() {
         if (itemPedido.getQuantidade() > 0) {
             TipoRoupa tipoRoupa = new TipoRoupaDAO().obter(tipoRoupaSelecionada);
@@ -144,7 +133,7 @@ public class PedidoController {
     public String cancelarPedido() {
         Pedido pedidoClicado = pedidosDataModel.getRowData();
         Pedido pedido = new PedidoDAO().obter(pedidoClicado.getId());
-        if (pedido.getIdStatus() != Constantes.STATUS_AGUARDANDO) {
+        if (pedido.getIdStatus() != Constantes.STATUS_PENDENTE_PAGAMENTO) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Só é possivel cancelar pedidos pendentes!"));                        
             return null;
         } else {
@@ -152,6 +141,29 @@ public class PedidoController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pedido " + pedido.getId() + " cancelado com sucesso!"));            
             return null;
         }
+    }
+    
+    
+    public String confirmarPagamento() {
+        Pedido pedidoClicado = pedidosDataModel.getRowData();
+        Pedido pedido = new PedidoDAO().obter(pedidoClicado.getId());
+        if (pedido != null) {
+            this.pedido = pedido;
+            this.pedido.setIdStatus(util.Constantes.STATUS_EM_ANDAMENTO);
+            new PedidoDAO().alterarStatus(this.pedido);
+        }
+        return null;
+    }
+    
+    public String confirmarLavagem() {
+        Pedido pedidoClicado = pedidosDataModel.getRowData();
+        Pedido pedido = new PedidoDAO().obter(pedidoClicado.getId());
+        if (pedido != null) {
+            this.pedido = pedido;
+            this.pedido.setIdStatus(util.Constantes.STATUS_AGUARDANDO_ENTREGA);
+            new PedidoDAO().alterarStatus(this.pedido);
+        }
+        return null;        
     }
     
     public void removerItem(int idTipoRoupa) {

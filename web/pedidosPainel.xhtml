@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+        <f:metadata>
+            <f:event listener="#{loginMB.checarPerfilFuncionario()}" type="preRenderView"></f:event>
+	</f:metadata>    
+    <h:body>
+        <ui:composition template="/template/common/commonLayout.xhtml">
+                <ui:define name="content">
+                    <div class="col-md-10 col-sm-4">
+                        <div class="dados-header">
+                         <h:form class="form-horizontal ">
+                            <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                              <legend>Painel de Pedidos</legend>
+                                <div class="form-group">
+                                  <label class="col-md-4 control-label" for="buscarPedido">Buscar pedido:</label>
+                                  <h:inputText id="inputNumeroPedido" styleClass="input-md" value="#{PedidoController.numPedidoPesquisa}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+                                  <h:commandButton value="Pesquisar" styleClass="mx-3 btn btn-primary btn-sm" action="#{PedidoController.listar}">
+                                  </h:commandButton>
+                                  <h:commandButton value="Ver todos" styleClass="mx-3 btn btn-secondary btn-sm" action="#{PedidoController.limparFiltros}">
+                                  </h:commandButton>                                  
+                                </div>
+                              <div style="overflow-x:auto;">                  
+                                <h:dataTable class="w3-table-all w3-hoverable text-center" value="#{PedidoController.pedidosDataModel}" var="p">
+                                    <h:column>
+                                        <f:facet name="header">Número</f:facet>
+                                        #{p.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Data</f:facet>
+                                        #{p.dataFormatada}
+                                    </h:column>  
+                                    <h:column>
+                                        <f:facet name="header">Valor Total</f:facet>
+                                        <h:outputText value="#{p.valorTotal}" >
+                                            <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                                        </h:outputText>
+                                    </h:column> 
+                                    [<h:column>
+                                        <f:facet name="header">Prazo</f:facet>
+                                        #{p.roupasPedido.size()} dias
+                                    </h:column> 
+                                    <h:column>
+                                        <f:facet name="header">Status</f:facet>
+                                        #{p.status}
+                                    </h:column> 
+                                    <h:column>
+                                        <f:facet name="header">Detalhes</f:facet>
+                                        <h:commandButton value="Detalhes" styleClass="btn btn-info btn-sm" action="#{PedidoController.detalhesPedido}">
+                                           </h:commandButton>
+                                    </h:column>  
+                                    <h:column>
+                                       <f:facet name="header"></f:facet>
+                                       <h:commandButton rendered="#{p.status == 'Pendente de Pagamento'}" value="✓ Pedido Pago" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarPagamento}">
+                                           </h:commandButton>
+                                    </h:column>                    
+                                    <h:column>
+                                       <f:facet name="header"></f:facet>
+                                       <h:commandButton rendered="#{p.status == 'Em andamento'}" value="✓ Lavagem Realizada" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarLavagem}">
+                                           </h:commandButton>
+                                    </h:column>         
+                                </h:dataTable>
+                              </div>                      
+                            </fieldset>
+                            <br/>                    
+                          </h:form>
+                        </div>
+                    </div>
+                </ui:define>	
+        </ui:composition>
+    	
+    </h:body>
+
+</html>

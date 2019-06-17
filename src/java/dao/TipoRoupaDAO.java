@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+import model.Pedido;
 import model.TipoRoupa;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -35,4 +36,13 @@ public class TipoRoupaDAO {
         session.close();
         return lista;
     }
+    
+    public void cadastrar(TipoRoupa roupa) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        session.save(roupa);
+        session.getTransaction().commit();
+        session.close();
+    }    
 }

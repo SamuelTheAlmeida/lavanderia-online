@@ -5,12 +5,18 @@
       xmlns:f="http://java.sun.com/jsf/core"      
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    
     <body>
 	    <ui:composition>
                 <ul class="list">
                     <h5><strong>#{loginMB.usuario.nome}</strong></h5>
-                    <li class="#{view.viewId.equals('/novoPedido.xhtml')?'active-menu':''}"><a href="novoPedido.xhtml">Criar Pedido <i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                    <li class="#{view.viewId.equals('/pedidos.xhtml')? 'active-menu' : ''}"><a href="pedidos.xhtml">Visualizar Pedidos <i class="fa fa-eye" aria-hidden="true"></i></a></li>		
+                    <li class="#{loginMB.cliente ? '' : 'd-none'} #{view.viewId.equals('/novoPedido.xhtml')?'active-menu':''}"><a href="novoPedido.xhtml">Pedido Online <i class="fa fa-plus" aria-hidden="true"></i></a></li>
+                    <li class="#{loginMB.cliente ? '' : 'd-none'} #{view.viewId.equals('/pedidosCliente.xhtml')? 'active-menu' : ''}"><a href="pedidosCliente.xhtml">Meus Pedidos <i class="fa fa-eye" aria-hidden="true"></i></a></li>		
+                    <li class="#{loginMB.funcionario ? '' : 'd-none'} #{view.viewId.equals('/pedidosPainel.xhtml')? 'active-menu' : ''}"><a href="pedidosPainel.xhtml">Pedidos <i class="fa fa-eye" aria-hidden="true"></i></a></li>		
+                    <li class="#{loginMB.funcionario ? '' : 'd-none'} #{view.viewId.equals('/cadastrarRoupa.xhtml')? 'active-menu' : ''}"><a href="cadastrarRoupa.xhtml">Cadastrar Tipo de Roupa <i class="fa fa-plus" aria-hidden="true"></i></a></li>		
+                    <li class="#{loginMB.funcionario ? '' : 'd-none'} #{view.viewId.equals('/cadastrarFuncionario.xhtml')? 'active-menu' : ''}"><a href="cadastrarFuncionario.xhtml">Cadastrar Funcionário <i class="fa fa-plus" aria-hidden="true"></i></a></li>		
+
                     <li>
                         <h:form>
                             <h:commandLink action="#{loginMB.logout()}" value="Sair ">

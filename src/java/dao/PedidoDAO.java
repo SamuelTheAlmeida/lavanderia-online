@@ -70,4 +70,12 @@ public class PedidoDAO {
         session.getTransaction().commit();
         session.close();
     }
+    
+    public void alterarStatus(Pedido pedido) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.update(pedido);
+        session.getTransaction().commit();
+        session.close();        
+    }
 }

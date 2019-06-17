@@ -48,13 +48,13 @@ public class UsuarioController {
         
         String senha = this.cliente.getUsuario().getSenha();
         this.cliente.getUsuario().setSenha(Utils.MD5(senha));
-        this.cliente.getUsuario().setIdPerfil(1);
+        this.cliente.getUsuario().setIdPerfil(util.Constantes.PERFIL_CLIENTE);
         String telefone = this.cliente.getTelefone().replaceAll("[^a-zA-Z]+","");
         this.cliente.setTelefone(telefone);
 
         dao.cadastrarUsuario(cliente.getUsuario());
         dao.cadastrarCliente(cliente);
-        return "pedidos?faces-redirect=true";
+        return "pedidosCliente?faces-redirect=true";
         
     }
     

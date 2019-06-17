@@ -6,11 +6,14 @@
 package controller;
 
 import dao.UsuarioDAO;
+import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import model.Usuario;
+import util.Constantes;
 import util.Utils;
 
 @SessionScoped
@@ -34,16 +37,41 @@ public class LoginMB {
         this.usuario = dao.autenticar(usuario);
         if (this.usuario != null) {
             System.out.println("mb: " + usuario.getIdPerfil());
-            return "pedidos?faces-redirect=true";
+            if (this.isCliente()) return "pedidosCliente?faces-redirect=true";
+            if (this.isFuncionario()) return "pedidosPainel?faces-redirect=true";
         } else {
             this.usuario = new Usuario();
             context.addMessage(null, new FacesMessage("Login ou senha incorretos"));  
-            return null;
         }
+        return null;
     }
+    
+    public void checarPerfilFuncionario() throws IOException {
+       if (!this.isFuncionario()) {
+           System.out.println("não é funcionario");
+           ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+           ec.redirect(ec.getRequestContextPath() + "/pedidosCliente.xhtml");
+       }
+   }   
+    
+    public void checarPerfilCliente() throws IOException {
+       if (!this.isCliente()) {
+           System.out.println("não é cliente");
+           ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+           ec.redirect(ec.getRequestContextPath() + "/pedidosPainel.xhtml");
+       }
+   }      
     
     public boolean isLogado() {
         return usuario.getEmail() != null;
+    }
+    
+    public boolean isCliente() {
+        return (this.usuario.getIdPerfil() == Constantes.PERFIL_CLIENTE);
+    }
+    
+    public boolean isFuncionario() {
+        return (this.usuario.getIdPerfil() == Constantes.PERFIL_FUNCIONARIO);
     }
     
     public String logout() {

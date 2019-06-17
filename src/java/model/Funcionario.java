@@ -19,7 +19,7 @@ import javax.persistence.OneToOne;
 public class Funcionario implements Serializable{
     private int matricula;
     private java.util.Date dataNascimento;
-    private Usuario usuario;
+    private Usuario usuario = new Usuario();
 
    @Id
    @GeneratedValue(strategy=GenerationType.AUTO) 

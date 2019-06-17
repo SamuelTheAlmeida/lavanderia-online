@@ -12,14 +12,17 @@ public final class Constantes {
     public static final int PERFIL_CLIENTE = 1;
     public static final int PERFIL_FUNCIONARIO = 2;
     
-    public static final int STATUS_PENDENTE = 1;
-    public static final int STATUS_AGUARDANDO = 2;
-    public static final int STATUS_FINALIZADO = 3;
+    public static final int STATUS_PENDENTE_PAGAMENTO = 1;
+    public static final int STATUS_EM_ANDAMENTO = 2;
+    public static final int STATUS_AGUARDANDO_ENTREGA = 3;
+    public static final int STATUS_ENTREGUE = 4;
+    
     
     public static final HashMap<Integer, String> STATUS_PEDIDO = new HashMap<>();
     static {
-        STATUS_PEDIDO.put(STATUS_PENDENTE, "Pendente");
-        STATUS_PEDIDO.put(STATUS_AGUARDANDO, "Aguardando Entrega");
-        STATUS_PEDIDO.put(STATUS_FINALIZADO, "Finalizado");
+        STATUS_PEDIDO.put(STATUS_PENDENTE_PAGAMENTO, "Pendente de Pagamento");
+        STATUS_PEDIDO.put(STATUS_EM_ANDAMENTO, "Em andamento");
+        STATUS_PEDIDO.put(STATUS_AGUARDANDO_ENTREGA, "Aguardando Entrega");
+        STATUS_PEDIDO.put(STATUS_ENTREGUE, "Entregue");
     }
 }

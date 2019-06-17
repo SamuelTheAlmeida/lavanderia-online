@@ -27,7 +27,8 @@ public class VerificarLogin implements PhaseListener {
         if ( (viewId.equals("/login.xhtml") || viewId.equals("/cadastroCliente.xhtml")) && loginMB.isLogado()  ) {
             NavigationHandler handler = context.getApplication().
             getNavigationHandler();
-            handler.handleNavigation(context, null, "index?faces-redirect=true");
+            String returnUrl = loginMB.isCliente() ? "pedidosCliente?faces-redirect=true" : "pedidosPainel?faces-redirect=true";
+            handler.handleNavigation(context, null, returnUrl);
             context.renderResponse();               
         } 
         // se o usuário não está logado, pode entrar nas páginas que não necessitam autenticação

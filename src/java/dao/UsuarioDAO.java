@@ -6,6 +6,7 @@
 package dao;
 import java.util.List;
 import model.Cliente;
+import model.Funcionario;
 import model.Pedido;
 import model.Usuario;
 import org.hibernate.Query;
@@ -31,6 +32,15 @@ public class UsuarioDAO {
         session.getTransaction().commit();
         session.close();
     }
+    
+    public void cadastrarFuncionario(Funcionario funcionario) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        session.save(funcionario);
+        session.getTransaction().commit();
+        session.close();
+    }    
    
    public boolean cpfExiste(String cpf) {
         System.out.println(cpf);

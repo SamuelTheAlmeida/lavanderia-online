@@ -7,14 +7,13 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
       >
     
-    <f:metadata>
-        <f:viewAction action="#{PedidoController.verificarPerfil}" />
-    </f:metadata>
-    
+    	<f:metadata>
+            <f:event listener="#{loginMB.checarPerfilCliente()}" type="preRenderView"></f:event>
+	</f:metadata>    
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
                 <ui:define name="content">
-                    <div class="col-md-2 col-sm-4">
+                    <div class="col-md-10 col-sm-4">
                         <div class="dados-header">
                          <h:form class="form-horizontal">
                             <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
