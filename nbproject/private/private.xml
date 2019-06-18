@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/web/cadastrarRoupa.xhtml</file>
-            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/web/cadastrarFuncionario.xhtml</file>
-            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/web/novoPedido.xhtml</file>
-            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/web/template/common/commonLayout.xhtml</file>
-            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/src/java/model/Cliente.java</file>
-            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/web/pedidosCliente.xhtml</file>
+            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/src/java/model/Pedido.java</file>
+            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/src/java/controller/PedidoController.java</file>
+            <file>file:/C:/Users/SAMUEL/Documents/NetBeansProjects/lavanderia-online/src/java/util/Endpoints.java</file>
         </group>
     </open-files>
 </project-private>

@@ -22,6 +22,13 @@ import javax.faces.model.ListDataModel;
 import model.Cliente;
 import model.TipoRoupa;
 import util.Constantes;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.json.JSONObject;
 
 @ManagedBean(name="PedidoController")
 @SessionScoped
@@ -176,8 +183,40 @@ public class PedidoController {
             this.pedido = pedido;
             this.pedido.setIdStatus(util.Constantes.STATUS_AGUARDANDO_ENTREGA);
             new PedidoDAO().alterarStatus(this.pedido);
+            entregarPedidoTADS();
         }
         return null;        
+    }
+    
+    public void entregarPedidoTADS() {
+        try {
+              java.net.URL url = new java.net.URL(util.Endpoints.ENDPOINT_ENTREGA);
+              HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+              conn.setRequestMethod("GET");
+              conn.setRequestProperty("Accept", "application/json");
+              JSONObject jsonObject = new JSONObject();
+              jsonObject.put("descricao", "Pedido LOL " + this.pedido.getId());
+              jsonObject.put("endereco", this.pedido.getCliente().getEndereco());
+              jsonObject.put("destinatario", this.pedido.getCliente().getUsuario().getNome());
+              jsonObject.put("dataCadastro", this.pedido.getDataFormatada());
+
+              if (conn.getResponseCode() != 200) {
+                      throw new RuntimeException("Failed : HTTP error code : "
+                                      + conn.getResponseCode());
+              }
+
+
+              conn.disconnect();
+
+        } catch (MalformedURLException e) {
+
+              e.printStackTrace();
+
+        } catch (IOException e) {
+
+              e.printStackTrace();
+
+        }        
     }
     
     public void removerItem(int idTipoRoupa) {
