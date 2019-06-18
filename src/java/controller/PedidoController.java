@@ -2,6 +2,7 @@ package controller;
 
 import dao.PedidoDAO;
 import dao.TipoRoupaDAO;
+import dao.UsuarioDAO;
 import java.io.IOException;
 import model.Pedido;
 import model.ItemPedido;
@@ -18,6 +19,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import model.Cliente;
 import model.TipoRoupa;
 import util.Constantes;
 
@@ -88,7 +90,10 @@ public class PedidoController {
         }
         pedido.setPrazo(maiorPrazo);
         pedido.setValorTotal(valorTotal);
-        
+        System.out.println("idusuario: " + this.loginMB.getUsuario().getId());
+        Cliente c = new UsuarioDAO().obterCliente(this.loginMB.getUsuario().getId());
+        //System.out.println("cliente: " + c.getId());
+        pedido.setCliente(c);
         // itera sobre itensPedido e salva cada um no pedido
         for (ItemPedido ip : itensPedido.values()) {
             pedido.getRoupasPedido().add(ip);
@@ -105,12 +110,21 @@ public class PedidoController {
     }
     
     public void listar() {
-        if (this.numPedidoPesquisa != null) {
-            this.pedidos = new PedidoDAO().listar(this.numPedidoPesquisa);
-            
+        if (this.loginMB.isCliente()) {
+            Cliente c = new UsuarioDAO().obterCliente(this.loginMB.getUsuario().getId());
+            if (this.numPedidoPesquisa != null) {
+                this.pedidos = new PedidoDAO().listarPorCliente(c.getId(), this.numPedidoPesquisa);
+            } else {
+                this.pedidos = new PedidoDAO().listarPorCliente(c.getId());
+            }              
         } else {
-            this.pedidos = new PedidoDAO().listar();
+            if (this.numPedidoPesquisa != null) {
+                this.pedidos = new PedidoDAO().listar(this.numPedidoPesquisa);
+            } else {
+                this.pedidos = new PedidoDAO().listar();
+            }            
         }
+
         pedidosDataModel = new ListDataModel<Pedido>(this.pedidos);
     }
     
@@ -137,7 +151,7 @@ public class PedidoController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Só é possivel cancelar pedidos pendentes!"));                        
             return null;
         } else {
-            new PedidoDAO().remover(pedido.getId());
+            new PedidoDAO().remover(pedido);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pedido " + pedido.getId() + " cancelado com sucesso!"));            
             return null;
         }

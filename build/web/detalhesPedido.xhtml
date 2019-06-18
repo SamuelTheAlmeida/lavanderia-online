@@ -6,32 +6,56 @@
       xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
       >
-    
-
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
             <ui:define name="content">
-                <h:form>
-                    <fieldset class="px-5 py-3 my-5">
-                        <legend>Detalhes do Pedido</legend>
-                        <h2>Pedido número <h:outputText value="#{PedidoController.pedido.id}"/></h2>
-                        <div class="dadosPessoais">
-                            <h4>Descrição</h4>
-                            <ui:repeat var="p" value="#{PedidoController.pedido.roupasPedido.toArray()}" varStatus="status">
-                                <p>#{p.quantidade} #{p.tipoRoupa.descricao}</p>
-                            </ui:repeat>
-                            <h3>Valor total:
-                                <h:outputText value="#{PedidoController.pedido.valorTotal}" >
-                                    <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
-                                </h:outputText>
-                            </h3>
-                            <p class="text-danger">Prazo de entrega: #{PedidoController.pedido.prazo} dias úteis</p>
-                            <!-- <h4>Endereço de entrega</h4>
-                            <p>AQUI ENTRA A RUA</p>
-                            <p>AQUI VAI CIDADE - ESTADO</p> !-->
-                        </div>
-                    </fieldset>
-                </h:form>               
+                <div class="col-md-10 col-sm-4 mt-3">
+                    <h:messages style = "margin:8px;" errorClass="text-danger" /> 
+                    <h:form>
+                        <fieldset class="px-5 py-3 my-5">
+                            <legend>Detalhes do Pedido</legend>
+                            <h2>Pedido número <h:outputText value="#{PedidoController.pedido.id}"/></h2>
+                            <h:dataTable styleClass="table table-sm" value="#{PedidoController.pedido.roupasPedido}" var="p">
+                                    <h:inputHidden value="#{p.tipoRoupa.id}" id="idTipoRoupa" />
+                                    <h:column>
+                                        <f:facet name="header">Item</f:facet>
+                                        #{p.tipoRoupa.descricao}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Quantidade</f:facet>
+                                        #{p.quantidade}
+                                    </h:column>  
+                                    <h:column>
+                                        <f:facet name="header">Valor Unitário</f:facet>
+                                        <h:outputText value="#{p.tipoRoupa.preco}" >
+                                            <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                                        </h:outputText>
+                                    </h:column> 
+
+                                </h:dataTable>
+                                <h4>Descrição</h4>
+                                <ui:repeat var="p" value="#{PedidoController.pedido.roupasPedido.toArray()}" varStatus="status">
+                                    <p>#{p.quantidade} #{p.tipoRoupa.descricao}</p>
+                                </ui:repeat>
+                                <h3>Valor total:
+                                    <h:outputText value="#{PedidoController.pedido.valorTotal}" >
+                                        <f:convertNumber type="currency" currencySymbol="R$ " locale="pt_BR" />
+                                    </h:outputText>
+                                </h3>
+                                <p class="text-danger">Prazo de entrega: #{PedidoController.pedido.prazo} dias úteis</p>
+                                <h:commandButton onclick="if (! confirm('Deseja realmente cancelar o pedido?')) return false" rendered="#{loginMB.cliente and PedidoController.pedido.status.equals('Pendente de Pagamento')}" value="Cancelar Pedido" styleClass="btn btn-danger btn-sm" action="#{PedidoController.cancelarPedido}">
+                                </h:commandButton>
+                                <h:commandButton onclick="if (! confirm('Confirmar pagamento do pedido?')) return false" rendered="#{loginMB.funcionario and PedidoController.pedido.status.equals('Pendente de Pagamento')}" value="✓ Confirmar Pagamento" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarPagamento}">
+                                </h:commandButton>
+                                <h:commandButton onclick="if (! confirm('Confirmar lavagem do pedido?')) return false" rendered="#{loginMB.funcionario and PedidoController.pedido.status.equals('Em andamento')}" value="✓ Confirmar Lavagem" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarLavagem}">
+                                </h:commandButton>  
+
+                                <!-- <h4>Endereço de entrega</h4>
+                                <p>AQUI ENTRA A RUA</p>
+                                <p>AQUI VAI CIDADE - ESTADO</p> !-->
+                        </fieldset>
+                    </h:form>  
+                </div>    
             </ui:define>
         </ui:composition>
     </h:body>

@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
@@ -34,7 +35,7 @@ public class Pedido implements Serializable{
    private double valorTotal;
    private int idStatus;
    private Date data_pedido;
-  // private Cliente cliente;    
+   private Cliente cliente = new Cliente();    
    
    @Id
    @GeneratedValue(strategy=GenerationType.AUTO)
@@ -62,13 +63,14 @@ public class Pedido implements Serializable{
         this.valorTotal = valorTotal;
     }
 
-   // public Cliente getCliente() {
-   //     return cliente;
-   // }
+    @OneToOne(fetch = FetchType.EAGER)
+    public Cliente getCliente() {
+        return cliente;
+    }
 
-   // public void setCliente(Cliente cliente) {
-   //     this.cliente = cliente;
-   // }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.pedido", cascade=CascadeType.ALL)
     public Set<ItemPedido> getRoupasPedido() {

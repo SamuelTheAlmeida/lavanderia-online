@@ -12,8 +12,9 @@
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
                 <ui:define name="content">
-                    <div class="col-md-10 col-sm-4">
+                    <div class="col-md-10 col-sm-4 mt-3">
                         <div class="dados-header">
+                            <h:messages style = "margin:8px;" errorClass="text-danger" /> 
                          <h:form class="form-horizontal ">
                             <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                               <legend>Painel de Pedidos</legend>
@@ -56,14 +57,11 @@
                                     </h:column>  
                                     <h:column>
                                        <f:facet name="header"></f:facet>
-                                       <h:commandButton rendered="#{p.status == 'Pendente de Pagamento'}" value="✓ Pedido Pago" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarPagamento}">
+                                       <h:commandButton onclick="if (! confirm('Confirmar pagamento do pedido?')) return false" rendered="#{p.status == 'Pendente de Pagamento'}" value="✓ Confirmar Pagamento" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarPagamento}">
                                            </h:commandButton>
-                                    </h:column>                    
-                                    <h:column>
-                                       <f:facet name="header"></f:facet>
-                                       <h:commandButton rendered="#{p.status == 'Em andamento'}" value="✓ Lavagem Realizada" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarLavagem}">
-                                           </h:commandButton>
-                                    </h:column>         
+                                        <h:commandButton onclick="if (! confirm('Confirmar lavagem do pedido?')) return false" rendered="#{p.status == 'Em andamento'}" value="✓ Confirmar Lavagem" styleClass="btn btn-success btn-sm" action="#{PedidoController.confirmarLavagem}">
+                                           </h:commandButton> 
+                                    </h:column>                             
                                 </h:dataTable>
                               </div>                      
                             </fieldset>

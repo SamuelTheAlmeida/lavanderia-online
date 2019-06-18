@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import model.Cliente;
 import model.Funcionario;
@@ -86,7 +87,4 @@ public class FuncionarioController {
     public void setTipoRoupa(TipoRoupa tipoRoupa) {
         this.tipoRoupa = tipoRoupa;
     }
-    
-    
-
 }

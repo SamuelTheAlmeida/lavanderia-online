@@ -10,37 +10,38 @@
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
                 <ui:define name="content">            
-                    <div class="col-md-9 col-sm-4">
+                    <div class="col-md-9 col-sm-4 mt-3">
                         <div class="dados-header">
-                            <h:form class="text-left" style="font-size: 0.8em">
+                            <h:messages style = "margin:8px;" errorClass="text-danger" /> 
+                            <h:form id="Cadastro" class="text-left" style="font-size: 0.8em">
                               <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                               <legend>Cadastrar Funcionário</legend>
                               <div class="form-row">
                                 <div class="form-group col-md-6">
-                                  <label for="inputNome">Nome Completo</label>
-                                  <h:inputText required="true" id="inputNome" styleClass="form-control inputTexto" value="#{FuncionarioController.funcionario.usuario.nome}">
+                                  <label for="Nome">Nome Completo</label>
+                                  <h:inputText required="true" id="Nome" styleClass="form-control inputTexto" value="#{FuncionarioController.funcionario.usuario.nome}">
                                       <f:passThroughAttribute name="placeholder" value="Nome Completo" />
                                   </h:inputText>
                                 </div>
                                 <div class="form-group col-md-6">
-                                  <label for="inputEmail">Email</label>
-                                  <h:inputText required="true" class="form-control" id="inputEmail" value="#{FuncionarioController.funcionario.usuario.email}">
+                                  <label for="Email">Email</label>
+                                  <h:inputText required="true" class="form-control" id="Email" value="#{FuncionarioController.funcionario.usuario.email}">
                                       <f:passThroughAttribute name="placeholder" value="Email"></f:passThroughAttribute>
                                   </h:inputText>
                                 </div>
                               </div>
                                 
                               <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="inputDataNascimento">Data de Nascimento</label>
-                                    <h:inputText required="true" value="#{FuncionarioController.funcionario.dataNascimento}" class="form-control dataNascimento" id="inputDataNascimento">  
+                                <div class="form-group col-md-6">
+                                    <label for="DataNascimento">Data de Nascimento</label>
+                                    <h:inputText required="true" value="#{FuncionarioController.funcionario.dataNascimento}" class="form-control dataNascimento" id="DataNascimento">  
                                          <f:convertDateTime pattern="dd/MM/yyyy"/>  
                                     </h:inputText>  
                                 </div>
  
-                                <div class="form-group col-md-4">
-                                  <label for="inputSenha">Senha</label>
-                                  <h:inputSecret required="true" value="#{FuncionarioController.funcionario.usuario.senha}" class="form-control" id="inputSenha">
+                                <div class="form-group col-md-6">
+                                  <label for="Senha">Senha</label>
+                                  <h:inputSecret required="true" value="#{FuncionarioController.funcionario.usuario.senha}" class="form-control" id="Senha">
                                       <f:passThroughAttribute name="placeholder" value="Senha"></f:passThroughAttribute>
                                   </h:inputSecret>
                                 </div> 

@@ -13,7 +13,8 @@
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
                 <ui:define name="content">
-                    <div class="col-md-10 col-sm-4">
+                    <h:messages style = "margin:8px;" errorClass="text-danger" /> 
+                    <div class="col-md-10 col-sm-4 mt-3">
                         <div class="dados-header">
                          <h:form class="form-horizontal">
                             <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
@@ -27,10 +28,14 @@
                                   </h:commandButton>                                  
                                 </div>
                               <div style="overflow-x:auto;">                  
-                                <h:dataTable class="w3-table-all w3-hoverable" value="#{PedidoController.pedidosDataModel}" var="p">
+                                  <h:dataTable class="w3-table-all w3-hoverable" value="#{PedidoController.pedidosDataModel}" var="p">
                                     <h:column>
                                         <f:facet name="header">Número</f:facet>
                                         #{p.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Cliente</f:facet>
+                                        #{p.cliente.usuario.nome}
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Data</f:facet>
@@ -48,7 +53,7 @@
                                     </h:column> 
                                     <h:column>
                                         <f:facet name="header">Status</f:facet>
-                                        #{p.status}
+                                        <span class="#{p.status == 'Aguardando Entrega' ? 'text-danger' : ' '}"> #{p.status} </span>
                                     </h:column> 
                                     <h:column>
                                         <f:facet name="header">Detalhes</f:facet>
@@ -56,8 +61,8 @@
                                            </h:commandButton>
                                     </h:column>  
                                     <h:column>
-                                       <f:facet name="header">Cancelar</f:facet>
-                                            <h:commandButton value="Remover" styleClass="btn btn-danger btn-sm" action="#{PedidoController.cancelarPedido}">
+                                       <f:facet name="header"></f:facet>
+                                       <h:commandButton onclick="if (! confirm('Deseja realmente cancelar o pedido?')) return false" rendered="#{p.status.equals('Pendente de Pagamento')}" value="Cancelar" styleClass="btn btn-danger btn-sm" action="#{PedidoController.cancelarPedido}">
                                            </h:commandButton>
                                     </h:column>  
                                 </h:dataTable>

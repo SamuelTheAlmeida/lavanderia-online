@@ -40,7 +40,19 @@ public class UsuarioDAO {
         session.save(funcionario);
         session.getTransaction().commit();
         session.close();
-    }    
+    }
+
+    public Cliente obterCliente(int idUsuario) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Cliente where usuario_id = :idUsuario");
+        select.setInteger("idUsuario", idUsuario);
+        Cliente cliente = (Cliente)select.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+        return cliente;    
+    }
    
    public boolean cpfExiste(String cpf) {
         System.out.println(cpf);

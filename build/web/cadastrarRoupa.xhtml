@@ -10,23 +10,28 @@
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
                 <ui:define name="content">            
-                    <div class="col-md-10 col-sm-4">
+                    <div class="col-md-5 col-sm-4 mt-3">
                         <div class="dados-header">
-                          <h:form class="form-horizontal">
+                          <h:messages style = "margin:8px;" errorClass="text-danger" /> 
+                          <h:form class="form">
                             <fieldset style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                               <legend>Cadastrar tipo de roupa</legend>
                                 <div class="form-row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-10">
                                       <label for="inputNome">Nome da Roupa</label>
                                       <h:inputText required="true" id="inputNome" styleClass="form-control inputTexto" value="#{FuncionarioController.tipoRoupa.descricao}">
                                           <f:passThroughAttribute name="placeholder" value="Nome" />
                                       </h:inputText>
-                                    </div>                                   
-                                    <div class="form-group col-md-4">
+                                    </div>   
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-10">
                                       <label for="inputPreco">Preço Unitário (R$)</label>
                                        <h:inputText id="inputPreco" styleClass="form-control preco" value="#{FuncionarioController.tipoRoupa.preco}" converterMessage="Digite apenas números" />
                                     </div>
-                                    <div class="form-group col-md-4">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-10">
                                       <label for="inputPrazo">Prazo de Lavagem (dias) </label>
                                       <h:inputText id="inputPrazo" styleClass="form-control mr-3" value="#{FuncionarioController.tipoRoupa.prazoLavagem}" converterMessage="Digite apenas números" />
                                     </div> 

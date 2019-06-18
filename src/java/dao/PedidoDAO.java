@@ -46,6 +46,31 @@ public class PedidoDAO {
         session.getTransaction().commit();
         session.close();
         return lista;
+    }  
+
+    public List<Pedido> listarPorCliente(int idCliente) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Pedido where cliente_id = :idCliente");
+        select.setInteger("idCliente", idCliente);
+        List<Pedido> lista = select.list();
+        session.getTransaction().commit();
+        session.close();
+        return lista;
+    }
+    
+    public List<Pedido> listarPorCliente(int idCliente, int idPedido) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        session.clear();
+        Query select = session.createQuery("from Pedido where id = :idPedido AND cliente_id = :idCliente");
+        select.setInteger("idPedido", idPedido);
+        select.setInteger("idCliente", idCliente);
+        List<Pedido> lista = select.list();
+        session.getTransaction().commit();
+        session.close();
+        return lista;
     }    
     
     public Pedido obter(int id) {
@@ -60,13 +85,11 @@ public class PedidoDAO {
         return pedido;
     }
     
-    public void remover(int id) {
+    public void remover(Pedido pedido) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.clear();
-        Query select = session.createQuery("delete Pedido where id = :id");
-        select.setInteger("id", id);
-        select.executeUpdate();
+        session.delete(pedido);
         session.getTransaction().commit();
         session.close();
     }

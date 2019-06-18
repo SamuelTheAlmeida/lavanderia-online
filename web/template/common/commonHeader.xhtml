@@ -19,7 +19,7 @@
 
                     <li>
                         <h:form>
-                            <h:commandLink action="#{loginMB.logout()}" value="Sair ">
+                            <h:commandLink onclick="if (! confirm('Deseja sair do sistema?')) return false" action="#{loginMB.logout()}" value="Sair ">
                                 <h:outputText value="" class="fa fa-sign-out-alt" />
                             </h:commandLink>
                         </h:form>    

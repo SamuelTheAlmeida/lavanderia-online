@@ -14,23 +14,23 @@
     <h:body>
         <ui:composition template="/template/common/commonLayout.xhtml">
                 <ui:define name="content">
-                    <div class="col-md-10 col-sm-4">
+                    <div class="col-md-10 col-sm-4 mt-3">
                         <div class="dados-header">
-                            <h:form class="form-horizontal">
+                            <h:messages style = "margin:8px;" errorClass="text-danger" /> 
+                            <h:form id="Pedido" class="form-horizontal">
                                 <fieldset>
                                     <legend>Novo pedido</legend>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="item">Tipo de Roupa:</label>
-                                        <h:selectOneMenu value="#{PedidoController.tipoRoupaSelecionada}"  styleClass="pçaRoupa">
+                                        <h:selectOneMenu id="Roupa" required="true" value="#{PedidoController.tipoRoupaSelecionada}"  styleClass="pçaRoupa">
                                             <f:selectItems value="#{PedidoController.mapTipoRoupa}" />
                                         </h:selectOneMenu>
                                         <br/>
-                                        <!--                                 <label class="col-md-4 control-label" for="novaRoupa">Não encontrou o tipo de roupa que deseja lavar? Adicione no campo ao lado:</label>
-                                        <input type="text" name="outroTipoRoupa" class="input-md"> -->
+
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="quantidade">Quantidade:</label>
-                                        <h:inputText id="inputQuantidade" styleClass="qtd" value="#{PedidoController.itemPedido.quantidade}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
+                                        <h:inputText required="true" id="Quantidade" styleClass="qtd" value="#{PedidoController.itemPedido.quantidade}" onkeypress="if(event.which &lt; 48 || event.which &gt; 57) return false;"/>
                                     </div>
                                     <h:commandButton value="Adicionar" styleClass="btnGeral" action="#{PedidoController.adicionarItem}"></h:commandButton>
                                     <br/><br/>
